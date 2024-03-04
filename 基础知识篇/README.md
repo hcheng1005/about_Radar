@@ -2,7 +2,7 @@
 
 ### 笔记
 
-[基础知识](./基础知识篇/radar_basic_info.md)
+[基础知识](./radar_basic_info.md)
 
 
 ### 外部资料
