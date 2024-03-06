@@ -1,18 +1,17 @@
 # Analyse Single-Object Tracking in Clutter Code 
 
-- [Analyse Single-Object Tracking in Clutter Code](#analyse-single-object-tracking-in-clutter-code)
-  - [nearestNeighbourFilter](#nearestneighbourfilter)
-    - [流程](#流程)
-      - [**Step1：椭圆门限筛选**](#step1椭圆门限筛选)
-      - [**Step2：计算量测似然**](#step2计算量测似然)
-      - [**Step3：状态更新**](#step3状态更新)
-    - [完整代码](#完整代码)
-  - [probDataAssocFilter](#probdataassocfilter)
-    - [流程](#流程-1)
-      - [**Step1：椭圆门限筛选**](#step1椭圆门限筛选-1)
-      - [**Step2：计算量测似然并计算权重**](#step2计算量测似然并计算权重)
-      - [**Step3：假设剪枝**](#step3假设剪枝)
-  - [GaussianSumFilter](#gaussiansumfilter)
+- [nearestNeighbourFilter](#nearestneighbourfilter)
+  - [流程](#流程)
+    - [**Step1：椭圆门限筛选**](#step1椭圆门限筛选)
+    - [**Step2：计算量测似然**](#step2计算量测似然)
+    - [**Step3：状态更新**](#step3状态更新)
+  - [完整代码](#完整代码)
+- [probDataAssocFilter](#probdataassocfilter)
+  - [流程](#流程-1)
+    - [**Step1：椭圆门限筛选**](#step1椭圆门限筛选-1)
+    - [**Step2：计算量测似然并计算权重**](#step2计算量测似然并计算权重)
+    - [**Step3：假设剪枝**](#step3假设剪枝)
+- [GaussianSumFilter](#gaussiansumfilter)
 
 ---
 

@@ -1,16 +1,21 @@
-<!--
- * @Author: CharlesHAO hcheng1005@gmail.com
- * @Date: 2024-03-06 20:33:31
- * @LastEditors: CharlesHAO hcheng1005@gmail.com
- * @LastEditTime: 2024-03-06 20:59:26
- * @FilePath: \about_Radar\数据处理篇\目标跟踪篇\目标跟踪基础知识\卡尔曼系列\code\MOT\HA01_Note.md
- * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
--->
 # Single-Object Tracking in Clutter
+
 
 [lecture](./lecture/Section%202%20Single-Object%20Tracking%20in%20Clutter/L2_handout_20190429.pdf)
 
 ---
+
+- [Nearest neighbour filtering](#nearest-neighbour-filtering)
+- [Probabilistic data association filtering](#probabilistic-data-association-filtering)
+- [Gaussian sum filtering](#gaussian-sum-filtering)
+  - [Pruning](#pruning)
+  - [Merging](#merging)
+  - [Capping](#capping)
+  - [Summary](#summary)
+  - [Code](#code)
+
+---
+
 
 <div align=center>
 <img src="images/20240305200448.png" width="70%" >
