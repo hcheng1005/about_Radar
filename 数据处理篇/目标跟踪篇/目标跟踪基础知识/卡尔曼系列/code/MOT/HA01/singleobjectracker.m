@@ -83,6 +83,7 @@ classdef singleobjectracker
             % first predicted state is the prior distribution
             state_pred = state;
             
+            % this N meas total steps, not meas number!
             for i=1:N
                 z = Z{i};
                 % Apply gating
