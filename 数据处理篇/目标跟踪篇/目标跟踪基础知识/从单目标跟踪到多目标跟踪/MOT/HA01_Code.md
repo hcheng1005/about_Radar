@@ -1,17 +1,18 @@
 # Analyse Single-Object Tracking in Clutter Code 
 
-- [nearestNeighbourFilter](#nearestneighbourfilter)
-  - [流程](#流程)
-    - [**Step1：椭圆门限筛选**](#step1椭圆门限筛选)
-    - [**Step2：计算量测似然**](#step2计算量测似然)
-    - [**Step3：状态更新**](#step3状态更新)
-  - [完整代码](#完整代码)
-- [probDataAssocFilter](#probdataassocfilter)
-  - [流程](#流程-1)
-    - [**Step1：椭圆门限筛选**](#step1椭圆门限筛选-1)
-    - [**Step2：计算量测似然并计算权重**](#step2计算量测似然并计算权重)
-    - [**Step3：假设剪枝**](#step3假设剪枝)
-- [GaussianSumFilter](#gaussiansumfilter)
+- [Analyse Single-Object Tracking in Clutter Code](#analyse-single-object-tracking-in-clutter-code)
+  - [nearestNeighbourFilter](#nearestneighbourfilter)
+    - [流程](#流程)
+      - [**Step1：椭圆门限筛选**](#step1椭圆门限筛选)
+      - [**Step2：计算量测似然**](#step2计算量测似然)
+      - [**Step3：状态更新**](#step3状态更新)
+    - [完整代码](#完整代码)
+  - [probDataAssocFilter](#probdataassocfilter)
+    - [流程](#流程-1)
+      - [**Step1：椭圆门限筛选**](#step1椭圆门限筛选-1)
+      - [**Step2：计算量测似然并计算权重**](#step2计算量测似然并计算权重)
+      - [**Step3：假设剪枝**](#step3假设剪枝)
+  - [GaussianSumFilter](#gaussiansumfilter)
 
 ---
 
@@ -62,21 +63,6 @@ getLogFuncStandard = @(point) MVN_COEF - 0.5 * ( dot((MEAN-point)', INVCOV * (ME
 
 ``` matlab
         function [estimates_x, estimates_P] = nearestNeighbourFilter(obj, state, Z, sensormodel, motionmodel, measmodel)
-            %NEARESTNEIGHBOURFILTER tracks a single object using nearest
-            %neighbor association 
-            %INPUT: state: a structure with two fields:
-            %                x: object initial state mean --- (object state
-            %                dimension) x 1 vector 
-            %                P: object initial state covariance --- (object
-            %                state dimension) x (object state dimension)
-            %                matrix  
-            %       Z: cell array of size (total tracking time, 1), each
-            %       cell stores measurements of  
-            %            size (measurement dimension) x (number of
-            %            measurements at corresponding time step) 
-            %OUTPUT:estimates: cell array of size (total tracking time, 1),
-            %       each cell stores estimated object state of size (object
-            %       state dimension) x 1   
             
             N = numel(Z);
             
@@ -194,3 +180,5 @@ end
 
 
 ## GaussianSumFilter
+
+基本同上述的probDataAssocFilter。

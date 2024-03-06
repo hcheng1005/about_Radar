@@ -1,3 +1,11 @@
+<!--
+ * @Author: CharlesHAO hcheng1005@gmail.com
+ * @Date: 2024-03-06 21:15:35
+ * @LastEditors: CharlesHAO hcheng1005@gmail.com
+ * @LastEditTime: 2024-03-06 21:16:15
+ * @FilePath: \about_Radar\数据处理篇\目标跟踪篇\目标跟踪基础知识\从单目标跟踪到多目标跟踪\MOT\README.md
+ * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+-->
 # MOT介绍
 
 
@@ -8,7 +16,7 @@ YouTube: https://www.youtube.com/channel/UCa2-fpj6AV8T6JK1uTRuFpw
 
 ## Home-Assignment 01 (HA01) - Single-Object Tracking in Clutter
 
-[**HA01_NOTE**](HA01_Note.md) | [**Code_Analyse**](./HA01_Code.md)
+[**HA01_NOTE**](./HA01_Note.md) | [**Code_Analyse**](./HA01_Code.md)
 
 ---
 

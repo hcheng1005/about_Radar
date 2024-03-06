@@ -162,11 +162,11 @@ classdef singleobjectracker
                 for i_old = 1:mk_old
                     % for each hypothesis, perform ellipsoidal gating and only 
                     % create object detection hypotheses for detections inside the gate;
-                    [z_ingate, ~] = obj.density.ellipsoidalGating(p_old(i_old), z, measmodel, obj.gating.size);
+                    [z_ingate, ~] = obj.density.ellipsoidalGating(p_old(i_old), z, measmodel, obj.gating.size); % 门限筛选
                     mk_new = size(z_ingate,2) + 1;
                     for i_new = 1:mk_new-1
-                        pred_likelihood_log = obj.density.predictedLikelihood(p_old(i_old),z_ingate(:,i_new),measmodel);
-                        w_new(end+1,1) = w_old(i_old) + pred_likelihood_log + log(sensormodel.P_D/sensormodel.intensity_c);
+                        pred_likelihood_log = obj.density.predictedLikelihood(p_old(i_old),z_ingate(:,i_new),measmodel);  %计算量测似然（log）
+                        w_new(end+1,1) = w_old(i_old) + pred_likelihood_log + log(sensormodel.P_D/sensormodel.intensity_c); % 计算权重
                         p_new(end+1,1) = obj.density.update(p_old(i_old), z_ingate(:,i_new), measmodel);
                     end
                     % for each hypothesis, create missed detection hypothesis;
