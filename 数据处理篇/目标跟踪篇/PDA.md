@@ -94,4 +94,4 @@ return MultipleHypothesis(hypotheses, normalise=True, total_weight=1)
 ```
 
 ### 完整代码
-[完整代码](./Stone%20Soup/PDA_JPDA/07_PDATutorial.ipynb)
+[完整代码](./Stone_Soup/07_PDATutorial.ipynb)
