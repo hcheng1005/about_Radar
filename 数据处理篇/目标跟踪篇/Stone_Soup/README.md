@@ -1,6 +1,8 @@
 # Stone Soup’s documentation
 
-## 安装
+[Stone Soup](https://stonesoup.readthedocs.io/en/latest/)
+
+## 安装最新版本
 ```
-python -m pip install stonesoup
+python -m pip install git+https://github.com/dstl/Stone-Soup.git#egg=stonesoup
 ```

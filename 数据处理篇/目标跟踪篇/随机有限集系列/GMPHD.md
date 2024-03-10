@@ -11,7 +11,7 @@
   - [滤波步骤](#滤波步骤)
   - [目标剪枝](#目标剪枝)
 - [扩展目标跟踪](#扩展目标跟踪)
-- [THE GAUSSIAN INVERSE WISHART PHD FILTER](#the-gaussian-inverse-wishart-phd-filter)
+- [GIW](#giw)
   - [扩展目标状态定义](#扩展目标状态定义)
   - [概率密度定义](#概率密度定义)
   - [状态预测与更新](#状态预测与更新)
@@ -20,6 +20,7 @@
 - [相关内容](#相关内容)
   - [量测分割](#量测分割)
   - [分布](#分布)
+- [示例代码](#示例代码)
 - [参考论文](#参考论文)
 
 
@@ -144,7 +145,7 @@ GMPHD的整体设计还是**基于点目标跟踪**，这一点在计算量测�
 
 随着传感器分辨率的提高，基于GMPHD思想的**扩展目标跟踪**已成为新趋势。
 
-## THE GAUSSIAN INVERSE WISHART PHD FILTER
+## GIW
 
 <div align=center>
 <img src="images/20240114115712.png" width="60%" >
@@ -245,15 +246,23 @@ GMPHD的整体设计还是**基于点目标跟踪**，这一点在计算量测�
 [了解常用聚类算法](https://zhuanlan.zhihu.com/p/104355127)
 
 ### 分布
-- [Gaussina Distribution](../../../数学基础/gaussian.md)
+- [Gaussina Distribution](./other/gaussian.md)
   
-- [Wishart Distribution and Inverse Wishart Distribution ](../../../数学基础/威沙特和逆威沙特分布.md)
+- [Wishart Distribution and Inverse Wishart Distribution ](./other/威沙特和逆威沙特分布.md)
   
-- [Poisson Distribution](../../../数学基础/Poisson.md)
+- [Poisson Distribution](./other/Poisson.md)
   
 - [Gammma Distribution](https://www.zhangzhenhu.com/glm/source/gamma%E6%A8%A1%E5%9E%8B/content.html#)
   
-- [Chi Distribution](../../../数学基础/卡方分布.md)
+- [Chi Distribution](./other/卡方分布.md)
+
+
+## 示例代码
+[GMPHD](../code/rfs_tracking_toolbox_updated/phd/gms/run_filter.m)
+
+[GMPHD_python](../code/python_ver/gmphd_giw_ggiw/gmphd_demo.py)
+
+[GIW_GGIW](../code/python_ver/gmphd_giw_ggiw/giw_demo.py)
 
 
 ## 参考论文

@@ -86,7 +86,7 @@ methods
         % number of time steps
         N = numel(Z);
         % number of objects
-        n = numel(states);
+        n = numel(states); % 航迹个数
         % allocate memory
         estimates_x = cell(N,1);
         estimates_P = cell(N,1);
@@ -98,9 +98,9 @@ methods
             m = size(z,2);
 
             % 1. implement ellipsoidal gating for each predicted local hypothesis seperately, see Note below for details; 
-            idx_z_ingate = zeros(n,m);
+            idx_z_ingate = zeros(n,m); 
             for i=1:n
-                [~, idx_z_ingate(i,:)] = obj.density.ellipsoidalGating(states(i), z, measmodel, obj.gating.size);
+                [~, idx_z_ingate(i,:)] = obj.density.ellipsoidalGating(states(i), z, measmodel, obj.gating.size); % 每个航迹筛选落入门限的量测
             end
             % 1.1 disconsider measurements that do not fall inside any object gates
             idx_keep = sum(idx_z_ingate,1) > 0;
@@ -109,7 +109,7 @@ methods
             m = sum(idx_keep);
 
             % 2. construct 2D cost matrix of size (number of objects, number of measurements that at least fall inside the gates + number of objects);
-            L = inf(n,m+n);
+            L = inf(n,m+n); % 代码矩阵:(航迹个数*量测个数)
             for i=1:n
                 for j = find(idx_z_ingate(i,:))
                     S_i_h    = measmodel.H(states(i).x) * states(i).P * measmodel.H(states(i).x).';
@@ -118,11 +118,11 @@ methods
                                  -1/2*log(det(2*pi*S_i_h)) ...
                                  -1/2*(z(:,j) - zbar_i_h).' / S_i_h * (z(:,j) - zbar_i_h)  );
                 end
-                L(i,m+i) = - log(1-sensormodel.P_D);
+                L(i,m+i) = - log(1-sensormodel.P_D); 
             end
 
             % 3. find the best assignment matrix using a 2D assignment solver;
-            % Murty's algorithm
+            % Murty's algorithm 匈牙利分配
             [col4row,~,gain] = assign2D(L);
             assert(gain~=-1, 'Assignment problem is unfeasible');
 
