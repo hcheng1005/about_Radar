@@ -13,6 +13,7 @@
   - [Step5: 假设剪枝](#step5-假设剪枝)
   - [Step6: 假设发布与分支更新](#step6-假设发布与分支更新)
 - [完整代码](#完整代码)
+- [参考资料](#参考资料)
 
 ---
 
@@ -192,3 +193,11 @@ end
 
 ## 完整代码
 [n_objectracker](./MOT_Course/MOT/HA02/n_objectracker.m)
+
+
+## 参考资料
+1. [论文：Multiple Hypothesis Tracking Revisited](./papers/MHT_ICCV15.pdf)
+   
+2. [MatlabHelper: trackertomht](https://ww2.mathworks.cn/help/fusion/ref/trackertomht-system-object.html)
+
+3. [代码：pyMHT](https://github.com/erikliland/pyMHT?tab=readme-ov-file) |  [配套论文：An ILP approach toMulti Hypothesis Tracking](https://mfr.osf.io/render?url=https://osf.io/2eeqd/?action=download%26mode=render)
