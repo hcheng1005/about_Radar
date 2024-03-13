@@ -20,6 +20,8 @@
 #include "DBSCAN_precomp.h"
 #include "DBSCAN_kdtree.h"
 
+#include "DBSCAN_kdtree_nano.h"
+
 // Visualization, [The CloudViewer](https://pcl.readthedocs.io/projects/tutorials/en/latest/cloud_viewer.html#cloud-viewer)
 template <typename PointCloudPtrType>
 void show_point_cloud(PointCloudPtrType cloud, std::string display_name) {
@@ -113,6 +115,27 @@ int main(int argc, char** argv) {
     
     clock_t end_ms = clock();
     std::cout << "cluster time cost:" << double(end_ms - start_ms) / CLOCKS_PER_SEC << " s" << std::endl;
+
+    // test 5 : nanoflann based DBSCAN
+    DBSCANNanoCluster dbscanNano;
+    std::vector<Point> points;
+    for(const auto &pc:cloud_filtered->points)
+    {
+        Point pt;
+        pt.x = pc.x;
+        pt.y = pc.y;
+        pt.z = pc.z;
+
+        points.push_back(pt);
+    }
+
+    start_ms = clock();
+    std::vector<std::vector<unsigned long>> res_ = dbscanNano.extract(points, 0.05, 100);
+    end_ms = clock();
+    
+    std::cout << "cluster time cost:" << double(end_ms - start_ms) / CLOCKS_PER_SEC << " s" << std::endl;
+    std::cout << res_.size() << std::endl;
+
     
     if(0)
     {
