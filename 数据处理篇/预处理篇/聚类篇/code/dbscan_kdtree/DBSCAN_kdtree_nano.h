@@ -5,71 +5,71 @@
 #include "nanoflann.hpp"
 #include <vector>
 
-
-typedef struct Point_
+template <typename T>
+struct PointCloud
 {
-    float x, y, z;  // X, Y, Z position
-}Point;
-
-
-struct adaptor {
-    std::vector<Point> m_points;
-
-    explicit adaptor(std::vector<Point>& points)
-        : m_points(points)
+    struct Point
     {
+        T x, y, z;
+    };
+
+    using coord_t = T;  //!< The type of each coordinate
+
+    std::vector<Point> pts;
+
+    // Must return the number of data points
+    inline size_t kdtree_get_point_count() const { return pts.size(); }
+
+    // Returns the dim'th component of the idx'th point in the class:
+    // Since this is inlined and the "dim" argument is typically an immediate
+    // value, the
+    //  "if/else's" are actually solved at compile time.
+    inline T kdtree_get_pt(const size_t idx, const size_t dim) const
+    {
+        if (dim == 0)
+            return pts[idx].x;
+        else if (dim == 1)
+            return pts[idx].y;
+        else
+            return pts[idx].z;
     }
 
-    [[nodiscard]] inline size_t kdtree_get_point_count() const
-    {
-        return m_points.size();
-    }
-
-    [[nodiscard]] inline float kdtree_get_pt(
-        const size_t index, const size_t dim) const
-    {
-        switch (dim) {
-        case 0:
-            return m_points[index].x;
-        case 1:
-            return m_points[index].y;
-        default:
-            return m_points[index].z;
-        }
-    }
-
-    template <class BBOX> bool kdtree_get_bbox(BBOX& /*bb*/) const
+    // Optional bounding-box computation: return false to default to a standard
+    // bbox computation loop.
+    //   Return true if the BBOX was already computed by the class and returned
+    //   in "bb" so it can be avoided to redo it again. Look at bb.size() to
+    //   find out the expected dimensionality (e.g. 2 or 3 for point clouds)
+    template <class BBOX>
+    bool kdtree_get_bbox(BBOX& /* bb */) const
     {
         return false;
     }
 };
 
-
+template <typename T>
 class DBSCANNanoCluster
 {
 public:
     DBSCANNanoCluster(){}
     ~DBSCANNanoCluster(){}
 
-    std::vector<std::vector<unsigned long>> extract(std::vector<Point> &points, float eps, size_t min_pts)
+    std::vector<std::vector<unsigned long>> extract(PointCloud<T> &points, float eps, size_t min_pts)
     {
         eps *= eps;
-        const auto adapt = adaptor(points);
-        using index_t = nanoflann::KDTreeSingleIndexAdaptor<nanoflann::L2_Simple_Adaptor<float, decltype(adapt)>, decltype(adapt),3>;
+        using KDtree = nanoflann::KDTreeSingleIndexAdaptor< nanoflann::L2_Simple_Adaptor< double, PointCloud<double> >,
+                                                      PointCloud<double>, 3 >;
 
-        index_t indexAdaptor(3, adapt, nanoflann::KDTreeSingleIndexAdaptorParams(10));
+        KDtree indexAdaptor(3, points, nanoflann::KDTreeSingleIndexAdaptorParams(15));
 
         indexAdaptor.buildIndex();
 
-        auto visited = std::vector<bool>(points.size());
+        auto visited = std::vector<bool>(points.pts.size());
         auto clusters = std::vector<std::vector<size_t>>();
-        // auto matches = std::vector<std::pair<size_t, float>>();
-        // auto sub_matches = std::vector<std::pair<size_t, float>>();
 
-        std::vector<nanoflann::ResultItem<uint32_t, float>> matches;
-        std::vector<nanoflann::ResultItem<uint32_t, float>> sub_matches;
+        std::vector<nanoflann::ResultItem<uint32_t, double>> matches;
+        std::vector<nanoflann::ResultItem<uint32_t, double>> sub_matches;
 
-        for (size_t i = 0; i < points.size(); i++)
+        for (size_t i = 0; i < points.pts.size(); i++)
         {
             if (visited[i])
             {
@@ -104,11 +104,11 @@ public:
         return clusters;
     }
 
-    std::array<float, 3> get_query_point(std::vector<Point> &points, size_t index)
+    std::array<double, 3> get_query_point(PointCloud<T>&points, size_t index)
     {
-        return std::array<float, 3>({(float)points[index].x,
-                                     (float)points[index].y, 
-                                     (float)points[index].z});
+        return std::array<double, 3>({(float)points.pts.at(index).x,
+                                     (float)points.pts.at(index).y, 
+                                     (float)points.pts.at(index).z});
     }
 
 }; // class DBSCANCluster

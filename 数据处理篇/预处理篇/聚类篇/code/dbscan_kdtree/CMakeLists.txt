@@ -8,5 +8,5 @@ add_definitions(${PCL_DEFINITIONS})
 add_executable(pcl_cluster pcl_cluster.cpp)
 target_link_libraries(pcl_cluster ${PCL_LIBRARIES}  -lpthread -lm)
 add_custom_command(TARGET pcl_cluster PRE_BUILD
-    COMMAND ${CMAKE_COMMAND} -E copy ${PROJECT_SOURCE_DIR}/resources/table_scene_lms400.pcd ${PROJECT_BINARY_DIR}/
+    COMMAND ${CMAKE_COMMAND} -E copy ${PROJECT_SOURCE_DIR}/resources/000000.pcd ${PROJECT_BINARY_DIR}/
 )
