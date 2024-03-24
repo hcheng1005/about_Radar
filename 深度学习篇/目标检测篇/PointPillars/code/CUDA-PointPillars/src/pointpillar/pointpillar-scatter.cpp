@@ -33,8 +33,8 @@ using namespace nvinfer1;
 using nvinfer1::plugin::PPScatterPlugin;
 using nvinfer1::plugin::PPScatterPluginCreator;
 
-static const char* PLUGIN_VERSION{"1"};
-static const char* PLUGIN_NAME{"PPScatterPlugin"};
+static const char *PLUGIN_VERSION{"1"};
+static const char *PLUGIN_NAME{"PPScatterPlugin"};
 
 // Static class fields initialization
 PluginFieldCollection PPScatterPluginCreator::mFC{};
@@ -42,42 +42,42 @@ std::vector<PluginField> PPScatterPluginCreator::mPluginAttributes;
 
 // Helper function for serializing plugin
 template <typename T>
-void writeToBuffer(char*& buffer, const T& val)
+void writeToBuffer(char *&buffer, const T &val)
 {
-    *reinterpret_cast<T*>(buffer) = val;
+    *reinterpret_cast<T *>(buffer) = val;
     buffer += sizeof(T);
 }
 
 // Helper function for deserializing plugin
 template <typename T>
-T readFromBuffer(const char*& buffer)
+T readFromBuffer(const char *&buffer)
 {
-    T val = *reinterpret_cast<const T*>(buffer);
+    T val = *reinterpret_cast<const T *>(buffer);
     buffer += sizeof(T);
     return val;
 }
 
 PPScatterPlugin::PPScatterPlugin(size_t h, size_t w)
-  : feature_y_size_(h), feature_x_size_(w)
+    : feature_y_size_(h), feature_x_size_(w)
 {
 }
 
-PPScatterPlugin::PPScatterPlugin(const void* data, size_t length)
+PPScatterPlugin::PPScatterPlugin(const void *data, size_t length)
 {
-    const char* d = reinterpret_cast<const char*>(data);
+    const char *d = reinterpret_cast<const char *>(data);
     feature_y_size_ = readFromBuffer<size_t>(d);
     feature_x_size_ = readFromBuffer<size_t>(d);
 }
 
-nvinfer1::IPluginV2DynamicExt* PPScatterPlugin::clone() const noexcept
+nvinfer1::IPluginV2DynamicExt *PPScatterPlugin::clone() const noexcept
 {
-    auto* plugin = new PPScatterPlugin(feature_y_size_, feature_x_size_);
+    auto *plugin = new PPScatterPlugin(feature_y_size_, feature_x_size_);
     plugin->setPluginNamespace(mNamespace.c_str());
     return plugin;
 }
 
 nvinfer1::DimsExprs PPScatterPlugin::getOutputDimensions(
-    int outputIndex, const nvinfer1::DimsExprs* inputs, int nbInputs, nvinfer1::IExprBuilder& exprBuilder) noexcept
+    int outputIndex, const nvinfer1::DimsExprs *inputs, int nbInputs, nvinfer1::IExprBuilder &exprBuilder) noexcept
 {
     assert(outputIndex == 0);
     nvinfer1::DimsExprs output;
@@ -90,11 +90,11 @@ nvinfer1::DimsExprs PPScatterPlugin::getOutputDimensions(
 }
 
 bool PPScatterPlugin::supportsFormatCombination(
-    int pos, const nvinfer1::PluginTensorDesc* inOut, int nbInputs, int nbOutputs) noexcept
+    int pos, const nvinfer1::PluginTensorDesc *inOut, int nbInputs, int nbOutputs) noexcept
 {
     assert(nbInputs == 3);
     assert(nbOutputs == 1);
-    const PluginTensorDesc& in = inOut[pos];
+    const PluginTensorDesc &in = inOut[pos];
     if (pos == 0)
     {
         return (in.type == nvinfer1::DataType::kFLOAT || in.type == nvinfer1::DataType::kHALF) && (in.format == TensorFormat::kLINEAR);
@@ -109,32 +109,31 @@ bool PPScatterPlugin::supportsFormatCombination(
     }
     if (pos == 3)
     {
-        return (inOut[0].type == nvinfer1::DataType::kFLOAT && in.type == nvinfer1::DataType::kFLOAT && in.format == TensorFormat::kLINEAR)
-            || (inOut[0].type == nvinfer1::DataType::kHALF  && in.type == nvinfer1::DataType::kHALF  && in.format == TensorFormat::kHWC8);
+        return (inOut[0].type == nvinfer1::DataType::kFLOAT && in.type == nvinfer1::DataType::kFLOAT && in.format == TensorFormat::kLINEAR) || (inOut[0].type == nvinfer1::DataType::kHALF && in.type == nvinfer1::DataType::kHALF && in.format == TensorFormat::kHWC8);
     }
     return false;
 }
 
-void PPScatterPlugin::configurePlugin(const nvinfer1::DynamicPluginTensorDesc* in, int nbInputs,
-    const nvinfer1::DynamicPluginTensorDesc* out, int nbOutputs) noexcept
+void PPScatterPlugin::configurePlugin(const nvinfer1::DynamicPluginTensorDesc *in, int nbInputs,
+                                      const nvinfer1::DynamicPluginTensorDesc *out, int nbOutputs) noexcept
 {
     return;
 }
 
-size_t PPScatterPlugin::getWorkspaceSize(const nvinfer1::PluginTensorDesc* inputs, int nbInputs,
-    const nvinfer1::PluginTensorDesc* outputs, int nbOutputs) const noexcept
+size_t PPScatterPlugin::getWorkspaceSize(const nvinfer1::PluginTensorDesc *inputs, int nbInputs,
+                                         const nvinfer1::PluginTensorDesc *outputs, int nbOutputs) const noexcept
 {
     return 0;
 }
 
-int PPScatterPlugin::enqueue(const nvinfer1::PluginTensorDesc* inputDesc,
-    const nvinfer1::PluginTensorDesc* outputDesc, const void* const* inputs, void* const* outputs, void* workspace,
-    cudaStream_t stream) noexcept
+int PPScatterPlugin::enqueue(const nvinfer1::PluginTensorDesc *inputDesc,
+                             const nvinfer1::PluginTensorDesc *outputDesc, const void *const *inputs, void *const *outputs, void *workspace,
+                             cudaStream_t stream) noexcept
 {
     try
     {
         int numFeatures = inputDesc[0].dims.d[1];
-        
+
         nvinfer1::DataType inputType = inputDesc[0].type;
 
         auto coords_data = static_cast<const unsigned int *>(inputs[1]);
@@ -145,10 +144,11 @@ int PPScatterPlugin::enqueue(const nvinfer1::PluginTensorDesc* inputDesc,
 
         int status = -1;
 
-        if(inputType == nvinfer1::DataType::kHALF){
+        if (inputType == nvinfer1::DataType::kHALF)
+        {
             auto pillar_features_data = static_cast<const half *>(inputs[0]);
             auto spatial_feature_data = static_cast<half *>(outputs[0]);
-            cudaMemsetAsync(spatial_feature_data, 0, numFeatures*featureY*featureX * sizeof(half), stream);
+            cudaMemsetAsync(spatial_feature_data, 0, numFeatures * featureY * featureX * sizeof(half), stream);
             status = pillarScatterHalfKernelLaunch(
                 pillar_features_data,
                 coords_data,
@@ -156,15 +156,15 @@ int PPScatterPlugin::enqueue(const nvinfer1::PluginTensorDesc* inputDesc,
                 featureX,
                 featureY,
                 spatial_feature_data,
-                stream
-                );
+                stream);
             assert(status == 0);
             return status;
         }
-        else if(inputType == nvinfer1::DataType::kFLOAT){
+        else if (inputType == nvinfer1::DataType::kFLOAT)
+        {
             auto pillar_features_data = static_cast<const float *>(inputs[0]);
             auto spatial_feature_data = static_cast<float *>(outputs[0]);
-            cudaMemsetAsync(spatial_feature_data, 0, numFeatures*featureY*featureX * sizeof(float), stream);
+            cudaMemsetAsync(spatial_feature_data, 0, numFeatures * featureY * featureX * sizeof(float), stream);
             status = pillarScatterFloatKernelLaunch(
                 pillar_features_data,
                 coords_data,
@@ -172,17 +172,17 @@ int PPScatterPlugin::enqueue(const nvinfer1::PluginTensorDesc* inputDesc,
                 featureX,
                 featureY,
                 spatial_feature_data,
-                stream
-                );
+                stream);
             assert(status == 0);
             return status;
         }
-        else{
+        else
+        {
             assert(status == 0);
             return status;
         }
     }
-    catch (const std::exception& e)
+    catch (const std::exception &e)
     {
         std::cerr << e.what() << std::endl;
     }
@@ -190,17 +190,17 @@ int PPScatterPlugin::enqueue(const nvinfer1::PluginTensorDesc* inputDesc,
 }
 
 nvinfer1::DataType PPScatterPlugin::getOutputDataType(
-    int index, const nvinfer1::DataType* inputTypes, int nbInputs) const noexcept
+    int index, const nvinfer1::DataType *inputTypes, int nbInputs) const noexcept
 {
     return inputTypes[0];
 }
 
-const char* PPScatterPlugin::getPluginType() const noexcept
+const char *PPScatterPlugin::getPluginType() const noexcept
 {
     return PLUGIN_NAME;
 }
 
-const char* PPScatterPlugin::getPluginVersion() const noexcept
+const char *PPScatterPlugin::getPluginVersion() const noexcept
 {
     return PLUGIN_VERSION;
 }
@@ -224,9 +224,9 @@ size_t PPScatterPlugin::getSerializationSize() const noexcept
     return 3 * sizeof(size_t);
 }
 
-void PPScatterPlugin::serialize(void* buffer) const noexcept
+void PPScatterPlugin::serialize(void *buffer) const noexcept
 {
-    char* d = reinterpret_cast<char*>(buffer);
+    char *d = reinterpret_cast<char *>(buffer);
     writeToBuffer<size_t>(d, feature_y_size_);
     writeToBuffer<size_t>(d, feature_x_size_);
 }
@@ -236,12 +236,12 @@ void PPScatterPlugin::destroy() noexcept
     delete this;
 }
 
-void PPScatterPlugin::setPluginNamespace(const char* libNamespace) noexcept
+void PPScatterPlugin::setPluginNamespace(const char *libNamespace) noexcept
 {
     mNamespace = libNamespace;
 }
 
-const char* PPScatterPlugin::getPluginNamespace() const noexcept
+const char *PPScatterPlugin::getPluginNamespace() const noexcept
 {
     return mNamespace.c_str();
 }
@@ -254,58 +254,57 @@ PPScatterPluginCreator::PPScatterPluginCreator()
     mFC.fields = mPluginAttributes.data();
 }
 
-const char* PPScatterPluginCreator::getPluginName() const noexcept
+const char *PPScatterPluginCreator::getPluginName() const noexcept
 {
     return PLUGIN_NAME;
 }
 
-const char* PPScatterPluginCreator::getPluginVersion() const noexcept
+const char *PPScatterPluginCreator::getPluginVersion() const noexcept
 {
     return PLUGIN_VERSION;
 }
 
-const PluginFieldCollection* PPScatterPluginCreator::getFieldNames() noexcept
+const PluginFieldCollection *PPScatterPluginCreator::getFieldNames() noexcept
 {
     return &mFC;
 }
 
-IPluginV2* PPScatterPluginCreator::createPlugin(const char* name, const PluginFieldCollection* fc) noexcept
+IPluginV2 *PPScatterPluginCreator::createPlugin(const char *name, const PluginFieldCollection *fc) noexcept
 {
-    const PluginField* fields = fc->fields;
+    const PluginField *fields = fc->fields;
     int nbFields = fc->nbFields;
     int target_h = 0;
     int target_w = 0;
     for (int i = 0; i < nbFields; ++i)
     {
-        const char* attr_name = fields[i].name;
+        const char *attr_name = fields[i].name;
         if (!strcmp(attr_name, "dense_shape"))
         {
-            const int* ts = static_cast<const int*>(fields[i].data);
+            const int *ts = static_cast<const int *>(fields[i].data);
             target_h = ts[0];
             target_w = ts[1];
         }
     }
-    auto* plugin = new PPScatterPlugin(
+    auto *plugin = new PPScatterPlugin(
         target_h,
-        target_w
-    );
+        target_w);
     return plugin;
 }
 
-IPluginV2* PPScatterPluginCreator::deserializePlugin(
-    const char* name, const void* serialData, size_t serialLength) noexcept
+IPluginV2 *PPScatterPluginCreator::deserializePlugin(
+    const char *name, const void *serialData, size_t serialLength) noexcept
 {
     // This object will be deleted when the network is destroyed,
-    auto* plugin = new PPScatterPlugin(serialData, serialLength);
+    auto *plugin = new PPScatterPlugin(serialData, serialLength);
     return plugin;
 }
 
-void PPScatterPluginCreator::setPluginNamespace(const char* libNamespace) noexcept
+void PPScatterPluginCreator::setPluginNamespace(const char *libNamespace) noexcept
 {
     mNamespace = libNamespace;
 }
 
-const char* PPScatterPluginCreator::getPluginNamespace() const noexcept
+const char *PPScatterPluginCreator::getPluginNamespace() const noexcept
 {
     return mNamespace.c_str();
 }

@@ -1,4 +1,12 @@
 /*
+ * @Author: CharlesHAO hcheng1005@gmail.com
+ * @Date: 2024-03-23 20:56:31
+ * @LastEditors: CharlesHAO hcheng1005@gmail.com
+ * @LastEditTime: 2024-03-24 10:13:20
+ * @FilePath: /about_Radar/深度学习篇/目标检测篇/PointPillars/code/CUDA-PointPillars/src/pointpillar/pointpillar-scatter.hpp
+ * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+ */
+/*
  * SPDX-FileCopyrightText: Copyright (c) 2021 NVIDIA CORPORATION & AFFILIATES. All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -25,73 +33,73 @@
 
 namespace nvinfer1
 {
-namespace plugin
-{
+    namespace plugin
+    {
 
-class PPScatterPlugin : public nvinfer1::IPluginV2DynamicExt
-{
-public:
-    PPScatterPlugin() = delete;
-    PPScatterPlugin(const void* data, size_t length);
-    PPScatterPlugin(size_t h, size_t w);
-    // IPluginV2DynamicExt Methods
-    nvinfer1::IPluginV2DynamicExt* clone() const noexcept override;
-    nvinfer1::DimsExprs getOutputDimensions(int outputIndex, 
-        const nvinfer1::DimsExprs* inputs, int nbInputs,
-        nvinfer1::IExprBuilder& exprBuilder) noexcept override;
-    bool supportsFormatCombination(
-        int pos, const nvinfer1::PluginTensorDesc* inOut, 
-        int nbInputs, int nbOutputs) noexcept override;
-    void configurePlugin(const nvinfer1::DynamicPluginTensorDesc* in, int nbInputs,
-        const nvinfer1::DynamicPluginTensorDesc* out, int nbOutputs) noexcept override;
-    size_t getWorkspaceSize(const nvinfer1::PluginTensorDesc* inputs, int nbInputs,
-        const nvinfer1::PluginTensorDesc* outputs, int nbOutputs) const noexcept override;
-    int enqueue(const nvinfer1::PluginTensorDesc* inputDesc, 
-        const nvinfer1::PluginTensorDesc* outputDesc,
-        const void* const* inputs, void* const* outputs, 
-        void* workspace, cudaStream_t stream) noexcept override;
-    // IPluginV2Ext Methods
-    nvinfer1::DataType getOutputDataType(int index, const nvinfer1::DataType* inputTypes, 
-        int nbInputs) const noexcept override;
-    // IPluginV2 Methods
-    const char* getPluginType() const noexcept override;
-    const char* getPluginVersion() const noexcept override;
-    int getNbOutputs() const noexcept override;
-    int initialize() noexcept override;
-    void terminate() noexcept override;
-    size_t getSerializationSize() const noexcept override;
-    void serialize(void* buffer) const noexcept override;
-    void destroy() noexcept override;
-    void setPluginNamespace(const char* pluginNamespace) noexcept override;
-    const char* getPluginNamespace() const noexcept override;
+        class PPScatterPlugin : public nvinfer1::IPluginV2DynamicExt
+        {
+        public:
+            PPScatterPlugin() = delete;
+            PPScatterPlugin(const void *data, size_t length);
+            PPScatterPlugin(size_t h, size_t w);
+            // IPluginV2DynamicExt Methods
+            nvinfer1::IPluginV2DynamicExt *clone() const noexcept override;
+            nvinfer1::DimsExprs getOutputDimensions(int outputIndex,
+                                                    const nvinfer1::DimsExprs *inputs, int nbInputs,
+                                                    nvinfer1::IExprBuilder &exprBuilder) noexcept override;
+            bool supportsFormatCombination(
+                int pos, const nvinfer1::PluginTensorDesc *inOut,
+                int nbInputs, int nbOutputs) noexcept override;
+            void configurePlugin(const nvinfer1::DynamicPluginTensorDesc *in, int nbInputs,
+                                 const nvinfer1::DynamicPluginTensorDesc *out, int nbOutputs) noexcept override;
+            size_t getWorkspaceSize(const nvinfer1::PluginTensorDesc *inputs, int nbInputs,
+                                    const nvinfer1::PluginTensorDesc *outputs, int nbOutputs) const noexcept override;
+            int enqueue(const nvinfer1::PluginTensorDesc *inputDesc,
+                        const nvinfer1::PluginTensorDesc *outputDesc,
+                        const void *const *inputs, void *const *outputs,
+                        void *workspace, cudaStream_t stream) noexcept override;
+            // IPluginV2Ext Methods
+            nvinfer1::DataType getOutputDataType(int index, const nvinfer1::DataType *inputTypes,
+                                                 int nbInputs) const noexcept override;
+            // IPluginV2 Methods
+            const char *getPluginType() const noexcept override;
+            const char *getPluginVersion() const noexcept override;
+            int getNbOutputs() const noexcept override;
+            int initialize() noexcept override;
+            void terminate() noexcept override;
+            size_t getSerializationSize() const noexcept override;
+            void serialize(void *buffer) const noexcept override;
+            void destroy() noexcept override;
+            void setPluginNamespace(const char *pluginNamespace) noexcept override;
+            const char *getPluginNamespace() const noexcept override;
 
-private:
-    std::string mNamespace;
-    // the y -- output size of the 2D backbone network
-    size_t feature_y_size_;
-    // the x -- output size of the 2D backbone network
-    size_t feature_x_size_;
-};
+        private:
+            std::string mNamespace;
+            // the y -- output size of the 2D backbone network
+            size_t feature_y_size_;
+            // the x -- output size of the 2D backbone network
+            size_t feature_x_size_;
+        };
 
-class PPScatterPluginCreator : public nvinfer1::IPluginCreator
-{
-public:
-    PPScatterPluginCreator();
-    const char* getPluginName() const noexcept override;
-    const char* getPluginVersion() const noexcept override;
-    const nvinfer1::PluginFieldCollection* getFieldNames() noexcept override;
-    nvinfer1::IPluginV2* createPlugin(const char* name, const nvinfer1::PluginFieldCollection* fc) noexcept override;
-    nvinfer1::IPluginV2* deserializePlugin(const char* name, const void* serialData, size_t serialLength) noexcept override;
-    void setPluginNamespace(const char* pluginNamespace) noexcept override;
-    const char* getPluginNamespace() const noexcept override;
+        class PPScatterPluginCreator : public nvinfer1::IPluginCreator
+        {
+        public:
+            PPScatterPluginCreator();
+            const char *getPluginName() const noexcept override;
+            const char *getPluginVersion() const noexcept override;
+            const nvinfer1::PluginFieldCollection *getFieldNames() noexcept override;
+            nvinfer1::IPluginV2 *createPlugin(const char *name, const nvinfer1::PluginFieldCollection *fc) noexcept override;
+            nvinfer1::IPluginV2 *deserializePlugin(const char *name, const void *serialData, size_t serialLength) noexcept override;
+            void setPluginNamespace(const char *pluginNamespace) noexcept override;
+            const char *getPluginNamespace() const noexcept override;
 
-private:
-    static nvinfer1::PluginFieldCollection mFC;
-    static std::vector<nvinfer1::PluginField> mPluginAttributes;
-    std::string mNamespace;
-};
+        private:
+            static nvinfer1::PluginFieldCollection mFC;
+            static std::vector<nvinfer1::PluginField> mPluginAttributes;
+            std::string mNamespace;
+        };
 
-} // namespace plugin
+    } // namespace plugin
 } // namespace nvinfer1
 
-#endif  // _POINTPILLAR_SCATTER_HPP_
+#endif // _POINTPILLAR_SCATTER_HPP_

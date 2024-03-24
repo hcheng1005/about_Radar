@@ -68,6 +68,23 @@ public:
         return true;
     }
 
+    /*
+        这段代码是一个名为forward_only的C++函数,它实现了一个前向传播的过程。下面是对该函数的中文解释:
+
+        首先,函数检查输入的点云数量num_points是否超过了预设的容量capacity_points_。如果超过了,则会打印一条警告信息,并将点云数量限制在容量内。
+
+        然后,函数将输入的点云数据从主机内存(lidar_points)复制到主机临时缓冲区(lidar_points_host_),再从主机缓冲区复制到设备内存(lidar_points_device_),使用异步的cudaMemcpyAsync操作来提高效率。
+
+        接下来,函数调用lidar_voxelization_->forward()来对输入的点云数据进行体素化处理,生成特征、坐标和参数。
+
+        然后,函数调用lidar_backbone_->forward()来对体素化后的特征进行特征提取和目标检测。
+
+        最后,函数调用lidar_postprocess_->forward()来对检测结果进行后处理,生成最终的边界框信息。
+
+        函数返回这些边界框信息(bndBoxVec())。
+
+        总的来说,这个函数实现了一个完整的点云处理流程,包括点云预处理、体素化、特征提取、目标检测和边界框生成等步骤。它是一个典型的基于深度学习的点云处理算法的组成部分
+    */
     std::vector<BoundingBox> forward_only(const float *lidar_points, int num_points, void *stream) {
         int cappoints = static_cast<int>(capacity_points_);
         if (num_points > cappoints) {
@@ -78,11 +95,20 @@ public:
 
         cudaStream_t _stream = static_cast<cudaStream_t>(stream);
         size_t bytes_points = num_points * param_.voxelization.num_feature * sizeof(float);
+
+        // 输入点云数据拷贝到host（CPU-CPU）
         checkRuntime(cudaMemcpyAsync(lidar_points_host_, lidar_points, bytes_points, cudaMemcpyHostToHost, _stream));
+
+        // host数据拷贝到device（CPU-GPU）
         checkRuntime(cudaMemcpyAsync(lidar_points_device_, lidar_points_host_, bytes_points, cudaMemcpyHostToDevice, _stream));
 
+        // 对输入的点云数据进行体素化处理,生成特征、坐标和参数
         this->lidar_voxelization_->forward(lidar_points_device_, num_points, _stream);
+
+        // 对体素化后的特征进行特征提取和目标检测
         this->lidar_backbone_->forward(this->lidar_voxelization_->features(), this->lidar_voxelization_->coords(), this->lidar_voxelization_->params(), _stream);
+        
+        // 对检测结果进行后处理,生成最终的边界框信息
         this->lidar_postprocess_->forward(this->lidar_backbone_->cls(), this->lidar_backbone_->box(), this->lidar_backbone_->dir(), _stream);
 
         return this->lidar_postprocess_->bndBoxVec();

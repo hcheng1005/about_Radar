@@ -47,38 +47,50 @@ typedef struct {
 __device__ float sigmoid(const float x) { return 1.0f / (1.0f + expf(-x)); }
 
 __global__ void postprocess_kernal(const float *cls_input,
-                                        float *box_input,
-                                        const float *dir_input,
-                                        float *anchors,
-                                        float *anchor_bottom_heights,
-                                        float *bndbox_output,
-                                        float *score_output,
-                                        int *object_counter,
-                                        const float min_x_range,
-                                        const float max_x_range,
-                                        const float min_y_range,
-                                        const float max_y_range,
-                                        const int feature_x_size,
-                                        const int feature_y_size,
-                                        const int num_anchors,
-                                        const int num_classes,
-                                        const int num_box_values,
-                                        const float score_thresh,
-                                        const float dir_offset)
+                                  float *box_input,
+                                  const float *dir_input,
+                                  float *anchors,
+                                  float *anchor_bottom_heights,
+                                  float *bndbox_output,
+                                  float *score_output,
+                                  int *object_counter,
+                                  const float min_x_range,
+                                  const float max_x_range,
+                                  const float min_y_range,
+                                  const float max_y_range,
+                                  const int feature_x_size,
+                                  const int feature_y_size,
+                                  const int num_anchors,
+                                  const int num_classes,
+                                  const int num_box_values,
+                                  const float score_thresh,
+                                  const float dir_offset)
 {
+  // 获取当前线程所在的块索引和线程索引
   int loc_index = blockIdx.x;
   int ith_anchor = threadIdx.x;
+
+  // 如果线程索引超出锚框数量,直接返回
   if (ith_anchor >= num_anchors)
   {
       return;
   }
+
+  // 计算当前位置在特征图中的列和行索引
   int col = loc_index % feature_x_size;
   int row = loc_index / feature_x_size;
+
+  // 计算当前位置在 x 和 y 轴上的偏移
   float x_offset = min_x_range + col * (max_x_range - min_x_range) / (feature_x_size - 1);
   float y_offset = min_y_range + row * (max_y_range - min_y_range) / (feature_y_size - 1);
+
+  // 计算当前位置和锚框在分类结果中的偏移
   int cls_offset = loc_index * num_anchors * num_classes + ith_anchor * num_classes;
 
+  // 获取当前位置和锚框的分类结果
   const float *scores = cls_input + cls_offset;
+
+  // 找到置信度最高的类别
   float max_score = sigmoid(scores[0]);
   int cls_id = 0;
   for (int i = 1; i < num_classes; i++) {
@@ -89,15 +101,20 @@ __global__ void postprocess_kernal(const float *cls_input,
     }
   }
 
+  // 如果置信度大于阈值,则进行后续处理
   if (max_score >= score_thresh)
   {
+    // 计算当前位置和锚框在边界框预测和方向预测中的偏移
     int box_offset = loc_index * num_anchors * num_box_values + ith_anchor * num_box_values;
     int dir_cls_offset = loc_index * num_anchors * 2 + ith_anchor * 2;
+
+    // 获取当前锚框的参数
     float *anchor_ptr = anchors + ith_anchor * 4;
     float z_offset = anchor_ptr[2] / 2 + anchor_bottom_heights[ith_anchor / 2];
     float anchor[7] = {x_offset, y_offset, z_offset, anchor_ptr[0], anchor_ptr[1], anchor_ptr[2], anchor_ptr[3]};
-    float *box_encodings = box_input + box_offset;
 
+    // 根据边界框预测和锚框参数,计算出实际的边界框坐标
+    float *box_encodings = box_input + box_offset;
     float xa = anchor[0];
     float ya = anchor[1];
     float za = anchor[2];
@@ -114,6 +131,7 @@ __global__ void postprocess_kernal(const float *cls_input,
     box_encodings[5] = expf(box_encodings[5]) * dza;
     box_encodings[6] = box_encodings[6] + ra;
 
+    // 根据方向预测,计算出最终的偏航角 `yaw`
     float yaw;
     int dir_label = dir_input[dir_cls_offset] > dir_input[dir_cls_offset + 1] ? 0 : 1;
     float period = 2 * M_PI / 2;
@@ -121,6 +139,7 @@ __global__ void postprocess_kernal(const float *cls_input,
     float dir_rot = val - floor(val / (period + 1e-8) + 0.f) * period;
     yaw = dir_rot + dir_offset + period * dir_label;
 
+    // 使用原子操作更新物体计数器,并将计算出的结果保存到输出缓冲区
     int resCount = (int)atomicAdd(object_counter, 1);
     float *data = bndbox_output + resCount * 9;
     data[0] = box_input[box_offset];
@@ -135,6 +154,7 @@ __global__ void postprocess_kernal(const float *cls_input,
     score_output[resCount] = max_score;
   }
 }
+
 
 cudaError_t postprocess_launch(const float *cls_input,
                       float *box_input,
@@ -241,45 +261,59 @@ __device__ inline void rotate_around_center(const float2 &center, const float an
     return;
 }
 
+// 设备端函数,用于计算两个旋转矩形框的IoU(Intersection over Union)
 __device__ inline bool devIoU(float const *const box_a, float const *const box_b, const float nms_thresh) {
+    // 获取两个矩形框的角度
     float a_angle = box_a[6], b_angle = box_b[6];
+    // 计算两个矩形框的半长和半宽
     float a_dx_half = box_a[3] / 2, b_dx_half = box_b[3] / 2, a_dy_half = box_a[4] / 2, b_dy_half = box_b[4] / 2;
+    // 计算两个矩形框的坐标
     float a_x1 = box_a[0] - a_dx_half, a_y1 = box_a[1] - a_dy_half;
     float a_x2 = box_a[0] + a_dx_half, a_y2 = box_a[1] + a_dy_half;
     float b_x1 = box_b[0] - b_dx_half, b_y1 = box_b[1] - b_dy_half;
     float b_x2 = box_b[0] + b_dx_half, b_y2 = box_b[1] + b_dy_half;
+    // 存储两个矩形框的四个角点坐标
     float2 box_a_corners[5];
     float2 box_b_corners[5];
 
+    // 计算两个矩形框的中心点坐标
     float2 center_a = float2 {box_a[0], box_a[1]};
     float2 center_b = float2 {box_b[0], box_b[1]};
 
+    // 存储相交点坐标
     float2 cross_points[16];
+    // 多边形中心点坐标
     float2 poly_center =  {0, 0};
     int cnt = 0;
     bool flag = false;
 
+    // 计算矩形框A的四个角点坐标
     box_a_corners[0] = float2 {a_x1, a_y1};
     box_a_corners[1] = float2 {a_x2, a_y1};
     box_a_corners[2] = float2 {a_x2, a_y2};
     box_a_corners[3] = float2 {a_x1, a_y2};
 
+    // 计算矩形框B的四个角点坐标
     box_b_corners[0] = float2 {b_x1, b_y1};
     box_b_corners[1] = float2 {b_x2, b_y1};
     box_b_corners[2] = float2 {b_x2, b_y2};
     box_b_corners[3] = float2 {b_x1, b_y2};
 
+    // 计算矩形框A和B的旋转角度的余弦和正弦值
     float a_angle_cos = cos(a_angle), a_angle_sin = sin(a_angle);
     float b_angle_cos = cos(b_angle), b_angle_sin = sin(b_angle);
 
+    // 将矩形框A和B的角点坐标绕自身中心点旋转
     for (int k = 0; k < 4; k++) {
         rotate_around_center(center_a, a_angle_cos, a_angle_sin, box_a_corners[k]);
         rotate_around_center(center_b, b_angle_cos, b_angle_sin, box_b_corners[k]);
     }
 
+    // 将矩形框A和B的第一个角点坐标复制到最后一个角点
     box_a_corners[4] = box_a_corners[0];
     box_b_corners[4] = box_b_corners[0];
 
+    // 遍历两个矩形框的边,计算相交点
     for (int i = 0; i < 4; i++) {
         for (int j = 0; j < 4; j++) {
             flag = intersection(box_a_corners[i + 1], box_a_corners[i],
@@ -292,6 +326,7 @@ __device__ inline bool devIoU(float const *const box_a, float const *const box_b
         }
     }
 
+    // 检查矩形框B的角点是否在矩形框A内,如果是,则加入相交点集合
     for (int k = 0; k < 4; k++) {
         if (check_box2d(box_a, box_b_corners[k])) {
             poly_center = {poly_center.x + box_b_corners[k].x, poly_center.y + box_b_corners[k].y};
@@ -305,9 +340,11 @@ __device__ inline bool devIoU(float const *const box_a, float const *const box_b
         }
     }
 
+    // 计算多边形中心点坐标
     poly_center.x /= cnt;
     poly_center.y /= cnt;
 
+    // 对相交点集合按极角排序
     float2 temp;
     for (int j = 0; j < cnt - 1; j++) {
         for (int i = 0; i < cnt - j - 1; i++) {
@@ -321,6 +358,7 @@ __device__ inline bool devIoU(float const *const box_a, float const *const box_b
         }
     }
 
+    // 计算多边形面积
     float area = 0;
     for (int k = 0; k < cnt - 1; k++) {
         float2 a = {cross_points[k].x - cross_points[0].x,
@@ -330,26 +368,35 @@ __device__ inline bool devIoU(float const *const box_a, float const *const box_b
         area += (a.x * b.y - a.y * b.x);
     }
 
+    // 计算两个矩形框的IoU
     float s_overlap = fabs(area) / 2.0;;
     float sa = box_a[3] * box_a[4];
     float sb = box_b[3] * box_b[4];
     float iou = s_overlap / fmaxf(sa + sb - s_overlap, 1e-8);
 
+    // 返回IoU是否大于阈值
     return iou >= nms_thresh;
 }
 
+
+// CUDA 内核函数,实现非极大值抑制(Non-Maximum Suppression, NMS)算法
 __global__ void nms_cuda(const int n_boxes, const float iou_threshold, const float *dev_boxes, uint64_t *dev_mask) {
+  // 获取当前线程所在的块索引和线程索引
   const int row_start = blockIdx.y;
   const int col_start = blockIdx.x;
   const int tid = threadIdx.x;
 
+  // 如果当前线程所在的行索引大于列索引,则直接返回
   if (row_start > col_start) return;
 
+  // 计算当前块中行和列的实际大小,避免访问越界
   const int row_size = fminf(n_boxes - row_start * NMS_THREADS_PER_BLOCK, NMS_THREADS_PER_BLOCK);
   const int col_size = fminf(n_boxes - col_start * NMS_THREADS_PER_BLOCK, NMS_THREADS_PER_BLOCK);
 
+  // 使用共享内存存储当前块中的边界框数据
   __shared__ float block_boxes[NMS_THREADS_PER_BLOCK * 7];
 
+  // 将当前块中的边界框数据加载到共享内存中
   if (tid < col_size) {
     int idx = NMS_THREADS_PER_BLOCK * col_start + tid;
     block_boxes[tid * 7 + 0] = dev_boxes[idx * DET_CHANNEL + 0];
@@ -362,6 +409,7 @@ __global__ void nms_cuda(const int n_boxes, const float iou_threshold, const flo
   }
   __syncthreads();
 
+  // 对当前块中的每个边界框,计算其与其他边界框的IoU,并更新掩码数组
   if (tid < row_size) {
     const int cur_box_idx = NMS_THREADS_PER_BLOCK * row_start + tid;
     const float *cur_box = dev_boxes + cur_box_idx * DET_CHANNEL;
@@ -372,6 +420,7 @@ __global__ void nms_cuda(const int n_boxes, const float iou_threshold, const flo
       start = tid + 1;
     }
     for (i = start; i < col_size; i++) {
+        // 计算IOU
       if (devIoU(cur_box, block_boxes + i * 7, iou_threshold)) {
         t |= 1ULL << i;
       }
@@ -379,6 +428,7 @@ __global__ void nms_cuda(const int n_boxes, const float iou_threshold, const flo
     dev_mask[cur_box_idx * gridDim.y + col_start] = t;
   }
 }
+
 
 cudaError_t nms_launch(unsigned int boxes_num,
                float *boxes,

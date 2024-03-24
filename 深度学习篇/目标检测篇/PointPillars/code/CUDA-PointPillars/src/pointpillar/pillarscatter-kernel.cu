@@ -27,31 +27,46 @@ __global__ void pillarScatterHalfkernel(const half *pillar_features_data,
                                         unsigned int featureX, unsigned int featureY,
                                         half *spatial_feature_data)
 {
+    // 根据当前块和线程的ID计算当前pillar的索引
     int pillar_idx = blockIdx.x * PILLARS_PER_BLOCK + threadIdx.x;
     int valid_pillars_inBlock = PILLARS_PER_BLOCK;
-    const int num_pillars = params_data[0];
-    int valid_blocks = (num_pillars+PILLARS_PER_BLOCK-1)/PILLARS_PER_BLOCK;
-    if(blockIdx.x >= valid_blocks) return;
-    if(blockIdx.x == (valid_blocks-1)) {
+    const int num_pillars = params_data[0]; // 最大pillar个数（超参）
+    int valid_blocks = (num_pillars + PILLARS_PER_BLOCK - 1) / PILLARS_PER_BLOCK;
+
+    // 如果当前块超出有效块的范围,直接返回
+    if (blockIdx.x >= valid_blocks)
+        return;
+
+    // 如果当前块是最后一个块,计算该块中有效的pillar数量
+    if (blockIdx.x == (valid_blocks - 1))
+    {
         valid_pillars_inBlock = num_pillars % PILLARS_PER_BLOCK;
     }
-    valid_pillars_inBlock = (valid_pillars_inBlock==0) ? PILLARS_PER_BLOCK : valid_pillars_inBlock;
-    __shared__ half pillarSM[PILLARS_PER_BLOCK][PILLAR_FEATURE_SIZE]; //pillar*64
+    valid_pillars_inBlock = (valid_pillars_inBlock == 0) ? PILLARS_PER_BLOCK : valid_pillars_inBlock;
+
+    // 将当前块中有效pillar的特征数据加载到共享内存中
+    __shared__ half pillarSM[PILLARS_PER_BLOCK][PILLAR_FEATURE_SIZE]; // pillar*64
     for (int i = 0; i < valid_pillars_inBlock; i++)
     {
-        pillarSM[i][threadIdx.x] = pillar_features_data[ (blockIdx.x * PILLARS_PER_BLOCK +i)*PILLAR_FEATURE_SIZE + threadIdx.x];
+        pillarSM[i][threadIdx.x] = pillar_features_data[(blockIdx.x * PILLARS_PER_BLOCK + i) * PILLAR_FEATURE_SIZE + threadIdx.x];
     }
     __syncthreads();
-    if(pillar_idx >= num_pillars) return;
+
+    // 如果当前pillar索引超出有效pillar的数量,直接返回
+    if (pillar_idx >= num_pillars)
+        return;
+
+    // 从coords_data中提取当前pillar的x和y坐标
     uint4 coord = ((const uint4 *)coords_data)[pillar_idx];
     unsigned int x = coord.w;
     unsigned int y = coord.z;
 
-    // Output tensor format : kHWC8, [N][H][W][(C+7)/8*8]
-    int C_stride = (PILLAR_FEATURE_SIZE+7)/8*8;
+    // 将当前pillar的特征数据散布到输出特征矩阵中
+    // 输出张量格式: kHWC8, [N][H][W][(C+7)/8*8]
+    int C_stride = (PILLAR_FEATURE_SIZE + 7) / 8 * 8;
     for (int i = 0; i < PILLAR_FEATURE_SIZE; i++)
     {
-        spatial_feature_data[y*featureX*C_stride + x*C_stride + i] = pillarSM[threadIdx.x][i];
+        spatial_feature_data[y * featureX * C_stride + x * C_stride + i] = pillarSM[threadIdx.x][i]; // 把特征放回到spatial_feature_data对应的坐标上
     }
 }
 
@@ -63,26 +78,29 @@ __global__ void pillarScatterFloatkernel(const float *pillar_features_data,
     int pillar_idx = blockIdx.x * PILLARS_PER_BLOCK + threadIdx.x;
     int valid_pillars_inBlock = PILLARS_PER_BLOCK;
     const int num_pillars = params_data[0];
-    int valid_blocks = (num_pillars+PILLARS_PER_BLOCK-1)/PILLARS_PER_BLOCK;
-    if(blockIdx.x >= valid_blocks) return;
-    if(blockIdx.x == (valid_blocks-1)) {
+    int valid_blocks = (num_pillars + PILLARS_PER_BLOCK - 1) / PILLARS_PER_BLOCK;
+    if (blockIdx.x >= valid_blocks)
+        return;
+    if (blockIdx.x == (valid_blocks - 1))
+    {
         valid_pillars_inBlock = num_pillars % PILLARS_PER_BLOCK;
     }
-    valid_pillars_inBlock = (valid_pillars_inBlock==0) ? PILLARS_PER_BLOCK : valid_pillars_inBlock;
-    __shared__ float pillarSM[PILLARS_PER_BLOCK][PILLAR_FEATURE_SIZE]; //pillar*64
+    valid_pillars_inBlock = (valid_pillars_inBlock == 0) ? PILLARS_PER_BLOCK : valid_pillars_inBlock;
+    __shared__ float pillarSM[PILLARS_PER_BLOCK][PILLAR_FEATURE_SIZE]; // pillar*64
     for (int i = 0; i < valid_pillars_inBlock; i++)
     {
-        pillarSM[i][threadIdx.x] = pillar_features_data[ (blockIdx.x * PILLARS_PER_BLOCK +i)*PILLAR_FEATURE_SIZE + threadIdx.x];
+        pillarSM[i][threadIdx.x] = pillar_features_data[(blockIdx.x * PILLARS_PER_BLOCK + i) * PILLAR_FEATURE_SIZE + threadIdx.x];
     }
     __syncthreads();
-    if(pillar_idx >= num_pillars) return;
+    if (pillar_idx >= num_pillars)
+        return;
     uint4 coord = ((const uint4 *)coords_data)[pillar_idx];
     unsigned int x = coord.w;
     unsigned int y = coord.z;
 
     for (int i = 0; i < PILLAR_FEATURE_SIZE; i++)
     {
-        spatial_feature_data[i*featureY*featureX + y*featureX + x] = pillarSM[threadIdx.x][i];
+        spatial_feature_data[i * featureY * featureX + y * featureX + x] = pillarSM[threadIdx.x][i];
     }
 }
 
@@ -93,12 +111,13 @@ int pillarScatterHalfKernelLaunch(const half *pillar_features_data,
                                   half *spatial_feature_data,
                                   cudaStream_t stream)
 {
-    dim3 blocks((featureX*featureY+PILLARS_PER_BLOCK-1)/PILLARS_PER_BLOCK);
+    dim3 blocks((featureX * featureY + PILLARS_PER_BLOCK - 1) / PILLARS_PER_BLOCK);
     dim3 threads(PILLARS_PER_BLOCK);
 
     pillarScatterHalfkernel<<<blocks, threads, 0, stream>>>(pillar_features_data, coords_data, params_data, featureX, featureY, spatial_feature_data);
     auto err = cudaGetLastError();
-    if (cudaSuccess != err) {
+    if (cudaSuccess != err)
+    {
         fprintf(stderr, "CUDA kernel failed : %s\n", cudaGetErrorString(err));
         return -1;
     }
@@ -113,12 +132,13 @@ int pillarScatterFloatKernelLaunch(const float *pillar_features_data,
                                    float *spatial_feature_data,
                                    cudaStream_t stream)
 {
-    dim3 blocks((featureX*featureY+PILLARS_PER_BLOCK-1)/PILLARS_PER_BLOCK);
+    dim3 blocks((featureX * featureY + PILLARS_PER_BLOCK - 1) / PILLARS_PER_BLOCK);
     dim3 threads(PILLARS_PER_BLOCK);
 
     pillarScatterFloatkernel<<<blocks, threads, 0, stream>>>(pillar_features_data, coords_data, params_data, featureX, featureY, spatial_feature_data);
     auto err = cudaGetLastError();
-    if (cudaSuccess != err) {
+    if (cudaSuccess != err)
+    {
         fprintf(stderr, "CUDA kernel failed : %s\n", cudaGetErrorString(err));
         return -1;
     }

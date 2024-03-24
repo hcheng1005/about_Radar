@@ -135,8 +135,10 @@ void SaveBoxPred(std::vector<pointpillar::lidar::BoundingBox> boxes, std::string
     包括体素化参数、后处理参数以及LIDAR模型的路径。
     最终，函数返回指向创建的pointpillar::lidar::Core对象的std::shared_ptr指针
 */
+// 创建一个指向pointpillar::lidar::Core对象的std::shared_ptr指针的函数
 std::shared_ptr<pointpillar::lidar::Core> create_core() {
     // 创建并初始化VoxelizationParameter对象
+    // 设置体素化参数，包括最小/最大范围、体素大小、网格大小等
     pointpillar::lidar::VoxelizationParameter vp;
     vp.min_range = nvtype::Float3(0.0, -39.68f, -3.0);
     vp.max_range = nvtype::Float3(69.12f, 39.68f, 1.0);
@@ -145,21 +147,23 @@ std::shared_ptr<pointpillar::lidar::Core> create_core() {
     vp.max_voxels = 40000;
     vp.max_points_per_voxel = 32;
     vp.max_points = 300000;
-    vp.num_feature = 4;
+    vp.num_feature = 4; // 输入点云原始特征数（x,y,z,idensity）
 
     // 创建并初始化PostProcessParameter对象
+    // 设置后处理参数，包括最小/最大范围和特征尺寸
     pointpillar::lidar::PostProcessParameter pp;
     pp.min_range = vp.min_range;
     pp.max_range = vp.max_range;
     pp.feature_size = nvtype::Int2(vp.grid_size.x / 2, vp.grid_size.y / 2);
 
     // 创建并初始化CoreParameter对象
+    // 将前面设置的VoxelizationParameter和PostProcessParameter赋值给CoreParameter
     pointpillar::lidar::CoreParameter param;
     param.voxelization = vp;
     param.lidar_model = "../model/pointpillar.plan";
     param.lidar_post = pp;
 
-    // 使用参数创建pointpillar::lidar::Core对象并返回其std::shared_ptr指针
+    // 使用CoreParameter创建pointpillar::lidar::Core对象并返回其std::shared_ptr指针
     return pointpillar::lidar::create_core(param);
 }
 
@@ -209,7 +213,7 @@ int main(int argc, char** argv) {
     getFolderFile(in_dir, files);
     std::cout << "Total " << files.size() << std::endl;
 
-    // Step 1: 生成PP实例
+    // 生成PP实例
     auto core = create_core();
     if (core == nullptr) {
         printf("Core has been failed.\n");
@@ -229,7 +233,7 @@ int main(int argc, char** argv) {
         std::cout << "\n<<<<<<<<<<<" <<std::endl;
         std::cout << "Load file: "<< dataFile <<std::endl;
 
-        //load points cloud
+        // 加载点云
         unsigned int length = 0;
         void *data = NULL;
         std::shared_ptr<char> buffer((char *)data, std::default_delete<char[]>());
@@ -238,9 +242,11 @@ int main(int argc, char** argv) {
         int points_size = length/sizeof(float)/4;
         std::cout << "Lidar points count: "<< points_size <<std::endl;
     
+        // 模型推理
         auto bboxes = core->forward((float *)buffer.get(), points_size, stream);
         std::cout<<"Detections after NMS: "<< bboxes.size()<<std::endl;
 
+        // 保存检测结果
         std::string save_file_name = std::string(out_dir) + file + ".txt";
         SaveBoxPred(bboxes, save_file_name);
 
