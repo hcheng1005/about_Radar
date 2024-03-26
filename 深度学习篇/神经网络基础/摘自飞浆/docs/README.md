@@ -21,7 +21,20 @@
     - [单层感知机](./tutorials/deep_learning/basic_concepts/single_layer_perceptron.md)
     - [多层感知机](./tutorials/deep_learning/basic_concepts/multilayer_perceptron.md)
 
-  - [激活函数](./tutorials/deep_learning/activation_functions/Activation_Function.md) （包括什么是激活函数、激活函数的作用、identity、step、sigmoid、tanh、relu、lrelu、prelu、rrelu、elu、selu、softsign、softplus、softmax、swish、hswish、激活函数的选择等21个知识点）
+  - **正则化**(包括什么是正则化？正则化如何帮助减少过度拟合？数据增强、L1 L2正则化介绍、L1和L2的贝叶斯推断分析法、Dropout、DropConnect、早停法等8个知识点)
+      - [l1l2.md](./tutorials/deep_learning/model_tuning/regularization/l1l2.md)
+      - [归一化基础知识点👍👍](./tutorials/deep_learning/normalization/basic_normalization.md)（包括什么是归一化、为什么要归一化、为什么归一化能提高求解最优解速度、归一化有哪些类型、不同归一化的使用条件、归一化和标准化的联系与区别等6个知识点）
+      - [正则化](./tutorials/deep_learning/model_tuning/regularization/regularization.md)
+      - [dropout.md](./tutorials/deep_learning/model_tuning/regularization/dropout.md)
+      - [dropconnect.md](./tutorials/deep_learning/model_tuning/regularization/dropconnect.md)
+      - [early_stop.md](./tutorials/deep_learning/model_tuning/regularization/early_stop.md)
+      - [Layer_Normalization](./tutorials/deep_learning/normalization/Layer_Normalization.md)
+      - [参数初始化👍](./tutorials/deep_learning/model_tuning/weight_initializer.md)（包括为什么不能全零初始化、常见的初始化方法等5个知识点）
+        - [扩展阅读：一文搞懂深度网络初始化👍](https://cloud.tencent.com/developer/article/1587082)
+        - [kaiming初始化的推导](https://zhuanlan.zhihu.com/p/305055975)
+        - [Pytorch神经网络初始化kaiming分布](https://blog.csdn.net/winycg/article/details/86649832)
+        - 
+  - [激活函数👍](./tutorials/deep_learning/activation_functions/Activation_Function.md) （包括什么是激活函数、激活函数的作用、identity、step、sigmoid、tanh、relu、lrelu、prelu、rrelu、elu、selu、softsign、softplus、softmax、swish、hswish、激活函数的选择等21个知识点）
 
   - **优化策略**（包括什么是优化器、GD、SGD、BGD、鞍点、Momentum、NAG、Adagrad、AdaDelta、RMSProp、Adam、AdaMa、Nadam、AMSGrad、AdaBound、AdamW、RAdam、Lookahead等18个知识点）
     - [梯度下降、随机梯度下降👍](./tutorials/deep_learning/optimizers/gd.md)
@@ -51,28 +64,13 @@
     - [batch_size👍](./tutorials/deep_learning/model_tuning/batch_size.md)
     - [学习率👍](./tutorials/deep_learning/model_tuning/learning_rate.md)（包括什么是学习率、学习率对网络的影响以及不同的学习率率衰减方法，如：分段常数衰减等12个学习率衰减方法）
   
-    - **正则化**(包括什么是正则化？正则化如何帮助减少过度拟合？数据增强、L1 L2正则化介绍、L1和L2的贝叶斯推断分析法、Dropout、DropConnect、早停法等8个知识点)
-      - [l1l2.md](./tutorials/deep_learning/model_tuning/regularization/l1l2.md)
-      - [regularization](./tutorials/deep_learning/model_tuning/regularization/regularization.md)
-      - [dropout.md](./tutorials/deep_learning/model_tuning/regularization/dropout.md)
-      - [dropconnect.md](./tutorials/deep_learning/model_tuning/regularization/dropconnect.md)
-      - [early_stop.md](./tutorials/deep_learning/model_tuning/regularization/early_stop.md)
-      - [basic_normalization👍](./tutorials/deep_learning/normalization/basic_normalization.md)（包括什么是归一化、为什么要归一化、为什么归一化能提高求解最优解速度、归一化有哪些类型、不同归一化的使用条件、归一化和标准化的联系与区别等6个知识点）
-      - [Layer_Normalization](./tutorials/deep_learning/normalization/Layer_Normalization.md)
-      - [参数初始化](./tutorials/deep_learning/model_tuning/weight_initializer.md)（包括为什么不能全零初始化、常见的初始化方法等5个知识点）
-
 
   - **距离度量方式**
       - [向量距离与相似度👍](./tutorials/deep_learning/distances/distances.md)
 
-  - **metrics**
-      - [GANEvaluation.md](./tutorials/deep_learning/metrics/GANEvaluation.md)
-      - [bleu.md](./tutorials/deep_learning/metrics/bleu.md)
-      - [evaluation_metric.md](./tutorials/deep_learning/metrics/evaluation_metric.md)
-      - [mAP.md](./tutorials/deep_learning/metrics/mAP.md)
-      - [perplexity.md](./tutorials/deep_learning/metrics/perplexity.md)
-      - [rouge.md](./tutorials/deep_learning/metrics/rouge.md)
-
+  - **评估方式**
+      - [评估指标👍](./tutorials/deep_learning/metrics/evaluation_metric.md)
+      - [mAP👍](./tutorials/deep_learning/metrics/mAP.md)
 
 ## **CNN**
 - [CV_CNN.md](./tutorials/CNN/CV_CNN.md)
