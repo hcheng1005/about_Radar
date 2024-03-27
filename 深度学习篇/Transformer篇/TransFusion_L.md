@@ -76,11 +76,11 @@ self.bbox_assigner = HungarianAssigner3D(**self.model_cfg.TARGET_ASSIGNER_CONFIG
     
 - **Transformer 解码器层**:
 
-    使用之前定义的 `TransformerDecoderLayer` 构建了一个 Transformer 解码器层。
+    使用之前定义的 **`TransformerDecoderLayer`** 构建了一个 Transformer 解码器层。
 
     **使用可学习的位置编码作为输入特征的位置信息**。
 
-- 预测头:
+- **预测头**:
 
     使用 `SeparateHead_Transfusion` 定义了一个预测头,用于生成最终的预测结果。
 
@@ -90,9 +90,9 @@ self.bbox_assigner = HungarianAssigner3D(**self.model_cfg.TARGET_ASSIGNER_CONFIG
 
     调用 init_weights 方法对模型进行权重初始化。
 
-- 目标分配器:
+- **目标分配器**:
 
-    使用 `HungarianAssigner3D` 定义了一个 3D 目标分配器,用于将预测结果与真实标注进行匹配。
+    使用 **`HungarianAssigner3D`** 定义了一个 3D 目标分配器,用于将预测结果与真实标注进行匹配。
 
 总的来说,这个 TransFusionModel 模块集成了卷积特征提取、Transformer 编码解码、多任务预测等功能,用于处理 3D 物体检测任务。它利用了可学习的位置编码和 Transformer 架构,以及专门设计的预测头和目标分配器,以提高模型的性能。
 
