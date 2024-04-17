@@ -256,7 +256,7 @@ void cwavelet(const double *y, int N, double dt, int mother, double param,
 
     小波变换：将小波“女儿”波形与FFT的结果相乘，得到小波变换的频域表示。
 
-    执行逆FFT：对小波变换的结果执行逆FFT，得到时域的小波变换结果。
+    执行逆FFT：对小波变换的结果执行逆FFT，得到时域小波系数。
   */
 
   // jtot是scale个数
@@ -275,10 +275,10 @@ void cwavelet(const double *y, int N, double dt, int mother, double param,
       daughter[k].im = tmp2;
     }
 
-    // 执行逆FFT：对小波变换的结果执行逆FFT，得到时域的小波变换结果。
+    // 执行逆FFT：对小波变换的结果执行逆FFT，得到时域小波系数。
     fft_exec(iobj, daughter, ypad);
 
-    // 保存小波变换结果
+    // 保存时域小波系数
     iter = 2 * (j - 1) * N;
     for (i = 0; i < N; ++i) {
       wave[iter + 2 * i] = ypad[i].re;

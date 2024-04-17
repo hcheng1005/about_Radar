@@ -2,14 +2,14 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 # 读取数据
-data = np.loadtxt('/home/zdhjs-05/myGitHubCode/mycode/wavelib/test/sst_nino3.dat')
+data = np.loadtxt('../test/sst_nino3.dat')
 # print(data.shape)
 
 plt.figure()
 plt.subplot(1,2,1)
 plt.plot(data)
 
-cwt_result = np.loadtxt('/home/zdhjs-05/myGitHubCode/mycode/wavelib/build/cwt_result.dat')
+cwt_result = np.loadtxt('../build/cwt_result.dat')
 cwt_result = cwt_result[:,2].reshape([22, 504])
 # print(cwt_result.shape)
 

@@ -302,7 +302,7 @@ cwt_object cwt_init(const char* wave, double param,int siglength, double dt, int
 
 	if (!strcmp(wave, "morlet") || !strcmp(wave, "morl")) {
 		s0 = 2 * dt;
-		dj = 0.4875; // why?
+		dj = 0.4875; // 小波尺度的间隔，决定了小波变换中尺度的分辨率。 why 0.4875?
 		mother = 0;
 		if (param < 0.0) {
 			printf("\n Morlet Wavelet Parameter should be >= 0 \n");
@@ -312,7 +312,6 @@ cwt_object cwt_init(const char* wave, double param,int siglength, double dt, int
 			param = 6.0;
 		}
 		strcpy(obj->wave,"morlet");
-		
 	}
 	else if (!strcmp(wave, "paul")) {
 		s0 = 2 * dt;
