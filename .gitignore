@@ -3,3 +3,4 @@
 *.asv
 数据处理篇/预处理篇/聚类篇/code/dbscan_kdtree/build/*
 *.bin
+机器学习篇/data/
