@@ -2,8 +2,10 @@
 
 ### 笔记
 
-- [从ADC到点云](./doc/radar_dsp.md)
+- [从ADC到点云 (基于coloradar数据集)](https://github.com/hcheng1005/coloradar/blob/master/doc/radar_dsp.md)
+
 - [小波变换](./小波变换/README.md)
 
+
 ### 仿真代码
-- [code ](./code/TDMA_MIMO/README.md)
+- [TDMA_MIMO](./code/TDMA_MIMO/README.md)

@@ -4,3 +4,6 @@
 [submodule "数据处理篇/其他应用/ENVIRONMENT_REPRESENTATION_USING_RADAR"]
 	path = 数据处理篇/其他应用/ENVIRONMENT_REPRESENTATION_USING_RADAR
 	url = https://github.com/hcheng1005/ENVIRONMENT_REPRESENTATION_USING_RADAR.git
+[submodule "信号处理篇/coloradar"]
+	path = 信号处理篇/coloradar
+	url = https://github.com/hcheng1005/coloradar.git
