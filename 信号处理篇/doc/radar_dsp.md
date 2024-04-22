@@ -26,7 +26,7 @@
 
 
 在进行完RangeFFT后，得到的结果需要进行**校准**.
-> 关于校准的细节内容参考**signalPrcesssing_userguide_4chipCascade**中的第四章节：**Antenna calibration**
+> 关于校准的细节内容参考[**signalPrcesssing_userguide_4chipCascade**](./signalPrcesssing_userguide_4chipCascade.pdf)中的第四章节：**Antenna calibration**
 
 
 参考代码：
