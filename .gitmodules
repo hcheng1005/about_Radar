@@ -1,0 +1,6 @@
+[submodule "数据处理篇/其他应用/EGO_MOTION_ESTIMATION_RADAR"]
+	path = 数据处理篇/其他应用/EGO_MOTION_ESTIMATION_RADAR
+	url = https://github.com/hcheng1005/EGO_MOTION_ESTIMATION_RADAR.git
+[submodule "数据处理篇/其他应用/ENVIRONMENT_REPRESENTATION_USING_RADAR"]
+	path = 数据处理篇/其他应用/ENVIRONMENT_REPRESENTATION_USING_RADAR
+	url = https://github.com/hcheng1005/ENVIRONMENT_REPRESENTATION_USING_RADAR.git

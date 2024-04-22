@@ -4,3 +4,6 @@
 数据处理篇/预处理篇/聚类篇/code/dbscan_kdtree/build/*
 *.bin
 机器学习篇/data/
+数据处理篇/其他应用/车辆状态估计/EGO_MOTION_ESTIMATION/1_egomotion_wheel_speed/sensor_data/
+数据处理篇/其他应用/车辆状态估计/EGO_MOTION_ESTIMATION/2_egomotion_radar_polar/sensor_data/
+数据处理篇/其他应用/车辆状态估计/EGO_MOTION_ESTIMATION/3_egomotion_radar_cartesian/sensor_data/

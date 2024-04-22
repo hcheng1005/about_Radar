@@ -221,6 +221,7 @@ plt.show()
 #### 连续小波变换CWT代码工程解析
 [CWT_Code](./wavelib/cwt_code.md)
 
+---
 
 ### 离散小波变换
 
