@@ -8,4 +8,4 @@
 
 
 ### 仿真代码
-- [TDMA_MIMO](./code/TDMA_MIMO/README.md)
+- [TDMA_MIMO](./TDMA_MIMO/README.md)
