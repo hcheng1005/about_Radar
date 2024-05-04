@@ -10,6 +10,7 @@
 | [自定义数据集并使用CNN模型](./CNN_customData.ipynb) |  |  |
 | [决策树与随机森林](./DecisionTree.ipynb) |  |  |
 | [AdaBoost](./AdaBoost.ipynb) |  |  |
+| [LSTM](./ECG5000/LSTM_demo.ipynb) | 包含LSTM模型训练、参数提取和C代码部署 | [C code](./ECG5000/lstm.c)|
 
 ### 参考资料
 
