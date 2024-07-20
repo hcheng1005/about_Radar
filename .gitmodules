@@ -6,4 +6,6 @@
 	url = https://github.com/hcheng1005/ENVIRONMENT_REPRESENTATION_USING_RADAR.git
 [submodule "信号处理篇/coloradar"]
 	path = 信号处理篇/coloradar
-	url = https://github.com/hcheng1005/coloradar.git
+[submodule "信号处理篇/OpenRadar"]
+	path = 信号处理篇/OpenRadar
+	url = https://github.com/hcheng1005/OpenRadar
