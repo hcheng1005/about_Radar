@@ -655,3 +655,48 @@ def peak_grouping_qualified(obj_raw,
         obj_out = obj_out[:MAX_OBJ_OUT, ...]
 
     return obj_out
+
+
+
+def cfar2d_ca(radar_cube, debug=0):
+    k = 1
+    # --- preprocess
+    # range_az = np.abs(radar_cube)
+    # heatmap_log = np.log2(range_az)
+    
+    heatmap_log = radar_cube
+
+    # --- cfar in azimuth direction
+    first_pass, _ = np.apply_along_axis(func1d=ca_,
+                                        axis=0,
+                                        arr=heatmap_log,
+                                        l_bound=20,
+                                        guard_len=4,
+                                        noise_len=3)
+    
+    if debug:
+        print(f'first_pass {first_pass}')
+
+    # --- cfar in range direction
+    second_pass, noise_floor = np.apply_along_axis(func1d=ca_,
+                                                    axis=0,
+                                                    arr=heatmap_log.T,
+                                                    l_bound=20,
+                                                    guard_len=4,
+                                                   noise_len=3)
+    if debug:
+        print(f'second_pass {second_pass}')
+
+    SKIP_SIZE = 4
+    noise_floor = noise_floor.T
+    first_pass = (heatmap_log > first_pass)
+    second_pass = (heatmap_log > second_pass.T)
+    peaks = (first_pass & second_pass)
+    peaks[:SKIP_SIZE, :] = 0
+    peaks[-SKIP_SIZE:, :] = 0
+    peaks[:, :SKIP_SIZE] = 0
+    peaks[:, -SKIP_SIZE:] = 0
+
+    peaks = peaks.astype('float32')
+
+    return peaks
