@@ -1,0 +1,47 @@
+baseurl: /radical_sdk/
+collections:
+  tooltips:
+    output: false
+company_name: TeckYian Lim
+defaults:
+- scope:
+    path: ''
+    type: pages
+  values:
+    comments: true
+    layout: page
+    search: true
+    sidebar: home_sidebar
+    topnav: topnav
+- scope:
+    path: ''
+    type: tooltips
+  values:
+    comments: true
+    layout: page
+    search: true
+    tooltip: true
+description: SDK for use with the RaDICaL Dataset
+exclude:
+- vendor
+google_analytics: null
+google_search: null
+highlighter: rouge
+host: 127.0.0.1
+kramdown:
+  auto_ids: true
+  hard_wrap: false
+  input: GFM
+  syntax_highlighter: rouge
+markdown: kramdown
+output: web
+plugins:
+- jekyll-remote-theme
+port: 4000
+remote_theme: fastai/nbdev-jekyll-theme
+repository: moodoki/radical_sdk
+sidebars:
+- home_sidebar
+site_title: radicalsdk
+topnav_title: radicalsdk
+use_math: true
