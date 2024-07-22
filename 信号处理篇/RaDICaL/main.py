@@ -40,12 +40,11 @@ if __name__ == '__main__':
 
     save_counter = 0  
     SAVE_FLAG = 0
-    DEBUG_FLAG = 1
+    DEBUG_FLAG = 0
 
     # Set up the plot  
     plt.rcParams['figure.figsize'] = [10, 10]  
     plt.ion()  
-    fig, ax1 = plt.subplots()  
     
     TOPICS_MAP = {'radar':'/radar_data',
                 'depth':'/camera/aligned_depth_to_color/image_raw',
@@ -62,13 +61,20 @@ if __name__ == '__main__':
     topic_to_stream_idx = { t: idx for (t, idx) in zip(topic_names, range(len(topic_names))) }
 
     bridge = cv_bridge.CvBridge()
-    
+
+    # Create a figure with two subplots (one for the image and one for radar data)  
+    fig, (ax_img, ax_radar) = plt.subplots(1, 2, figsize=(12, 6))  
     logging.info("Iterating through bag messages")
     for topic, msg, t in tqdm(bag.read_messages(topics=topic_names),
                               total=bag.get_message_count(topic_names)):
         if topic == '/camera/color/image_raw':
-            # img = bridge.imgmsg_to_cv2(msg, desired_encoding='bgr8') # something wrong 
-            continue
+            img = bridge.imgmsg_to_cv2(msg, desired_encoding='bgr8') # something wrong 
+                    
+            # Display the image in the left subplot  
+            ax_img.clear()  
+            ax_img.imshow(img)  
+            ax_img.set_title('Camera Image')  
+            ax_img.axis('off')  # Hide axis  
         elif topic == '/radar_data':
             
             """
@@ -94,12 +100,15 @@ if __name__ == '__main__':
                 print(np.where(peaks == 1))
             
             # 可视化
-            ax1.clear()  
-            ax1.imshow(fft2d_log_abs, aspect='auto',  origin='lower')  
-            plt.scatter(np.where(peaks == 1)[1], np.where(peaks == 1)[0], marker='x', c='r') 
+            ax_radar.clear()  
+            ax_radar.imshow(fft2d_log_abs, aspect='auto',  origin='lower')  
+            ax_radar.scatter(np.where(peaks == 1)[1], np.where(peaks == 1)[0], marker='x', c='r')  
+            ax_radar.set_title('Radar Data')  
+            ax_radar.set_xlabel('Doppler')  
+            ax_radar.set_ylabel('Range')  
             # Draw and pause to update the plots  
             plt.draw()  
-            plt.pause(0.01) 
+            plt.pause(0.001) 
             
 
     bag.close()
