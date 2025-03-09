@@ -1,5 +1,25 @@
 # 毫米波雷达基础知识
 
+
+
+## 强烈推荐
+
+- [成像算法（雷达、射频信号成像）](https://zhuanlan.zhihu.com/p/598993695)
+
+- [FMCW Radar Part 1 – Ranging](https://wirelesspi.com/fmcw-radar-part-1-ranging/)
+
+- [FMCW Radar Part 2 – Velocity, Angle and Radar Data Cube](https://wirelesspi.com/fmcw-radar-part-2-velocity-angle-and-radar-data-cube/)
+
+- [FMCW Radar Part 3 – Design Guidelines](https://wirelesspi.com/fmcw-radar-part-3-design-guidelines/)
+
+
+- [YouTube](https://www.youtube.com/@MarshallBrunerRF)
+
+
+---
+
+---
+
 ![](images/20230319142137.png)
 
 ![](images/20240304165142.png)
@@ -16,7 +36,6 @@
   - [角分辨率](#角分辨率)
 - [常见应用的 chirp 信号配置](#常见应用的-chirp-信号配置)
 - [参考链接](#参考链接)
-
 
 ## 线性调频
 
@@ -137,6 +156,3 @@ $$ \theta_{res}=\frac{\lambda}{d*N_{rx}*cos(\theta)} $$
 <img src="images/20230319144350.png" width="60%">
 </div>
 
-## 参考链接
-- [成像算法（雷达、射频信号成像）](https://zhuanlan.zhihu.com/p/598993695)
-- [二十分钟信号处理与雷达系统入门](https://zhuanlan.zhihu.com/p/594064002)
