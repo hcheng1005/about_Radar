@@ -1,5 +1,18 @@
 ## 机器学习
 
+### 参考资料
+
+[鸢尾花书-机器学习](https://github.com/Visualize-ML/Book7_Visualizations-for-Machine-Learning)
+
+[ShowMeAI](https://www.showmeai.tech/tutorials/34)（机器学习算法的图文介绍，非常详细，初学者用于入门非常合适）
+
+[Machine-Learning](https://github.com/Jack-Cherish/Machine-Learning?tab=readme-ov-file)（高星仓库，手动实现各类算法并有对应文章）
+
+[机器学习算法](https://feisky.xyz/machine-learning/)
+
+
+### 个人笔记
+
 | 模型 | 描述 | 备注 |
 |:-------:|:-------:|:-------:|
 | [感知机](./perception.ipynb) | 线性二分类器 | [感知机colab](https://colab.research.google.com/drive/1YZ0FYbkyMR1HoVW67sLcsYN_TdavNLRp#scrollTo=KJE4QNdHqh0f)|
@@ -12,11 +25,4 @@
 | [AdaBoost](./AdaBoost.ipynb) |  |  |
 | [LSTM](./ECG5000/LSTM_demo.ipynb) | 包含LSTM模型训练、参数提取和C代码部署 | [C code](./ECG5000/lstm.c)|
 
-### 参考资料
-
-[ShowMeAI](https://www.showmeai.tech/tutorials/34)（机器学习算法的图文介绍，非常详细，初学者用于入门非常合适）
-
-[Machine-Learning](https://github.com/Jack-Cherish/Machine-Learning?tab=readme-ov-file)（高星仓库，手动实现各类算法并有对应文章）
-
-[机器学习算法](https://feisky.xyz/machine-learning/)
 
