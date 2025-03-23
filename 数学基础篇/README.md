@@ -2,9 +2,9 @@
 
 ## 极力推荐
 
-- [鸢尾花书-数学要素](https://github.com/Visualize-ML/Book3_Elements-of-Mathematics)
+- [👍鸢尾花书-数学要素](https://github.com/Visualize-ML/Book3_Elements-of-Mathematics)
 
-- [鸢尾花书-统计至简](https://github.com/Visualize-ML/Book5_Essentials-of-Probability-and-Statistics)
+- [👍鸢尾花书-统计至简](https://github.com/Visualize-ML/Book5_Essentials-of-Probability-and-Statistics)
 
 ### 概率论
 

@@ -6,12 +6,11 @@
 
 - [成像算法（雷达、射频信号成像）](https://zhuanlan.zhihu.com/p/598993695)
 
-- [FMCW Radar Part 1 – Ranging](https://wirelesspi.com/fmcw-radar-part-1-ranging/)
+- [👍 FMCW Radar Part 1 – Ranging](https://wirelesspi.com/fmcw-radar-part-1-ranging/)
 
-- [FMCW Radar Part 2 – Velocity, Angle and Radar Data Cube](https://wirelesspi.com/fmcw-radar-part-2-velocity-angle-and-radar-data-cube/)
+- [👍 FMCW Radar Part 2 – Velocity, Angle and Radar Data Cube](https://wirelesspi.com/fmcw-radar-part-2-velocity-angle-and-radar-data-cube/)
 
-- [FMCW Radar Part 3 – Design Guidelines](https://wirelesspi.com/fmcw-radar-part-3-design-guidelines/)
-
+- [👍 FMCW Radar Part 3 – Design Guidelines](https://wirelesspi.com/fmcw-radar-part-3-design-guidelines/)
 
 - [YouTube](https://www.youtube.com/@MarshallBrunerRF)
 
@@ -24,18 +23,19 @@
 
 ![](images/20240304165142.png)
 
-- [线性调频](#线性调频)
-- [探测距离和距离分辨率](#探测距离和距离分辨率)
-  - [最大测距](#最大测距)
-  - [雷达距离分辨率](#雷达距离分辨率)
-- [速度测量和速度分辨率](#速度测量和速度分辨率)
-  - [最大不模糊速度](#最大不模糊速度)
-  - [速度分辨率](#速度分辨率)
-- [角度测量和角度分辨率](#角度测量和角度分辨率)
-  - [最大不模糊角度](#最大不模糊角度)
-  - [角分辨率](#角分辨率)
-- [常见应用的 chirp 信号配置](#常见应用的-chirp-信号配置)
-- [参考链接](#参考链接)
+- [毫米波雷达基础知识](#毫米波雷达基础知识)
+  - [强烈推荐](#强烈推荐)
+  - [线性调频](#线性调频)
+  - [探测距离和距离分辨率](#探测距离和距离分辨率)
+    - [最大测距](#最大测距)
+    - [雷达距离分辨率](#雷达距离分辨率)
+  - [速度测量和速度分辨率](#速度测量和速度分辨率)
+    - [最大不模糊速度](#最大不模糊速度)
+    - [速度分辨率](#速度分辨率)
+  - [角度测量和角度分辨率](#角度测量和角度分辨率)
+    - [最大不模糊角度](#最大不模糊角度)
+    - [角分辨率](#角分辨率)
+  - [常见应用的 chirp 信号配置](#常见应用的-chirp-信号配置)
 
 ## 线性调频
 
