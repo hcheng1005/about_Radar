@@ -1,38 +1,23 @@
-## 信号处理篇
+# 信号处理篇
 
-### 笔记更新日志
+## 基础信号处理
 
-#### [如何提高FFT后的精度](./HighResFFT.md)
-
-### 基础信号处理
-
-- [信号与傅里叶变换](./笔记/信号与傅里叶变换.ipynb)
-
-- [信号与加窗](./FFT_with_windows.ipynb)
-
-- [👍FMCW Doppler Processing](./笔记/fmcw_range_doppler.ipynb)
-  
-- [低通、带通、高通滤波器](./笔记/filter_py.ipynb)
-
-- [CFAR](./CFAR.ipynb)
+- [00_信号与傅里叶变换](./笔记/00_信号与傅里叶变换.ipynb)
+- [01_FFT与加窗](./笔记/01_FFT_with_windows.ipynb)
+- [02-基础-距离和速度](./笔记/02_基础-距离和速度.ipynb)
+- [03-基础-角度](./笔记/03_基础-角度.ipynb)
+  - [DOA](./笔记/DOA/RAEDME.md)
+- [04-目标检测-CFAR](./笔记/04_目标检测-CFAR.ipynb)
 
 
-### DOA算法
+## 工程项目
 
-- [DOA](./DOA/RAEDME.md)
-
-
-### [TDMA_MIMO仿真](./TDMA_MIMO/README.md)
-
-
-### [小波变换](./小波变换/README.md)
-
-
-### 笔记
-
+- [TDMA_MIMO](./TDMA_MIMO/TDMA-MIMO//README.md)
 - [从ADC到点云 (基于coloradar数据集)](https://github.com/hcheng1005/coloradar/blob/master/doc/radar_dsp.md)
 
 
-### 仿真代码
-  
-- [TDMA_MIMO](./TDMA_MIMO/TDMA-MIMO//README.md)
+## 其他
+
+- [小波变换](./小波变换/README.md)
+- [如何提高FFT后的精度](./笔记/HighResFFT.md)
+
