@@ -1,0 +1,174 @@
+<mxfile host="65bd71144e">
+    <diagram id="g3ADH1dZI8dvgpBmFaP2" name="Page-1">
+        <mxGraphModel dx="2635" dy="1070" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="2" value="" style="line;strokeWidth=2;direction=south;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="75" y="142" width="10" height="330" as="geometry"/>
+                </mxCell>
+                <mxCell id="5" value="" style="endArrow=none;dashed=1;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="7" target="2">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="265" y="472" as="sourcePoint"/>
+                        <mxPoint x="410" y="242" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="7" value="" style="shape=ext;double=1;rounded=1;whiteSpace=wrap;html=1;arcSize=0;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+                    <mxGeometry x="70" y="132" width="20" height="10" as="geometry"/>
+                </mxCell>
+                <mxCell id="10" value="" style="shape=curlyBracket;whiteSpace=wrap;html=1;rounded=1;labelPosition=left;verticalLabelPosition=middle;align=right;verticalAlign=middle;rotation=-90;" vertex="1" parent="1">
+                    <mxGeometry x="-20" y="402" width="20" height="180" as="geometry"/>
+                </mxCell>
+                <mxCell id="11" value="" style="shape=curlyBracket;whiteSpace=wrap;html=1;rounded=1;labelPosition=left;verticalLabelPosition=middle;align=right;verticalAlign=middle;rotation=-90;" vertex="1" parent="1">
+                    <mxGeometry x="160" y="402" width="20" height="180" as="geometry"/>
+                </mxCell>
+                <mxCell id="15" value="=" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontStyle=1" vertex="1" parent="1">
+                    <mxGeometry x="45" y="502" width="70" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="16" value="右探测距离" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontStyle=1" vertex="1" parent="1">
+                    <mxGeometry x="135" y="502" width="70" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="17" value="" style="line;strokeWidth=2;direction=south;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="519" y="132" width="10" height="330" as="geometry"/>
+                </mxCell>
+                <mxCell id="18" value="" style="endArrow=none;dashed=1;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="19" target="17">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="709" y="462" as="sourcePoint"/>
+                        <mxPoint x="854" y="232" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="19" value="" style="shape=ext;double=1;rounded=1;whiteSpace=wrap;html=1;arcSize=0;fillColor=#dae8fc;strokeColor=#6c8ebf;rotation=-30;" vertex="1" parent="1">
+                    <mxGeometry x="514" y="122" width="20" height="10" as="geometry"/>
+                </mxCell>
+                <mxCell id="21" value="" style="shape=curlyBracket;whiteSpace=wrap;html=1;rounded=1;labelPosition=left;verticalLabelPosition=middle;align=right;verticalAlign=middle;rotation=-90;" vertex="1" parent="1">
+                    <mxGeometry x="464" y="432" width="20" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="22" value="" style="shape=curlyBracket;whiteSpace=wrap;html=1;rounded=1;labelPosition=left;verticalLabelPosition=middle;align=right;verticalAlign=middle;rotation=-90;" vertex="1" parent="1">
+                    <mxGeometry x="648" y="348" width="20" height="268" as="geometry"/>
+                </mxCell>
+                <mxCell id="23" value="左探测距离" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontStyle=1" vertex="1" parent="1">
+                    <mxGeometry x="439" y="492" width="70" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="24" value="右探测距离" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontStyle=1" vertex="1" parent="1">
+                    <mxGeometry x="619" y="492" width="70" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="26" value="" style="line;strokeWidth=2;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="-280" y="462" width="1260" height="10" as="geometry"/>
+                </mxCell>
+                <mxCell id="32" value="" style="endArrow=none;dashed=1;html=1;entryX=0.25;entryY=1;entryDx=0;entryDy=0;exitX=0.517;exitY=0.772;exitDx=0;exitDy=0;exitPerimeter=0;strokeColor=#3399FF;" edge="1" parent="1" target="19">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="424.4000000000001" y="469.72" as="sourcePoint"/>
+                        <mxPoint x="484" y="312" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="33" value="" style="endArrow=none;dashed=1;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;exitX=0.823;exitY=0.772;exitDx=0;exitDy=0;exitPerimeter=0;entryPerimeter=0;strokeColor=#3399FF;" edge="1" parent="1" target="17">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="791.5999999999999" y="469.72" as="sourcePoint"/>
+                        <mxPoint x="742" y="162" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="34" value="" style="endArrow=none;dashed=1;html=1;exitX=0.141;exitY=1;exitDx=0;exitDy=0;exitPerimeter=0;strokeColor=#3399FF;" edge="1" parent="1" source="26">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="30" y="192" as="sourcePoint"/>
+                        <mxPoint x="80" y="142" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="35" value="" style="endArrow=none;dashed=1;html=1;exitX=0.426;exitY=0.4;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;strokeColor=#3399FF;" edge="1" parent="1" source="26" target="2">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="-89" y="478" as="sourcePoint"/>
+                        <mxPoint x="90" y="152" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="37" value="左探测距离" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontStyle=1" vertex="1" parent="1">
+                    <mxGeometry x="-50" y="502" width="70" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="38" value="＜" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontStyle=1" vertex="1" parent="1">
+                    <mxGeometry x="529" y="492" width="70" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="39" value="&lt;font style=&quot;color: rgb(255, 0, 0);&quot;&gt;将雷达倾斜一定角度&lt;/font&gt;" style="whiteSpace=wrap;html=1;rounded=1;arcSize=50;align=center;verticalAlign=middle;strokeWidth=1;autosize=1;spacing=4;treeFolding=1;treeMoving=1;newEdgeStyle={&quot;edgeStyle&quot;:&quot;entityRelationEdgeStyle&quot;,&quot;startArrow&quot;:&quot;none&quot;,&quot;endArrow&quot;:&quot;none&quot;,&quot;segment&quot;:10,&quot;curved&quot;:1,&quot;sourcePerimeterSpacing&quot;:0,&quot;targetPerimeterSpacing&quot;:0};" vertex="1" parent="1">
+                    <mxGeometry x="574" y="90" width="150" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="40" value="" style="edgeStyle=entityRelationEdgeStyle;startArrow=none;endArrow=none;segment=10;curved=1;sourcePerimeterSpacing=0;targetPerimeterSpacing=0;" edge="1" target="39" parent="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="534" y="130" as="sourcePoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="41" value="&lt;font style=&quot;color: rgb(255, 0, 0);&quot;&gt;雷达平行于路面安装&lt;/font&gt;" style="whiteSpace=wrap;html=1;rounded=1;arcSize=50;align=center;verticalAlign=middle;strokeWidth=1;autosize=1;spacing=4;treeFolding=1;treeMoving=1;newEdgeStyle={&quot;edgeStyle&quot;:&quot;entityRelationEdgeStyle&quot;,&quot;startArrow&quot;:&quot;none&quot;,&quot;endArrow&quot;:&quot;none&quot;,&quot;segment&quot;:10,&quot;curved&quot;:1,&quot;sourcePerimeterSpacing&quot;:0,&quot;targetPerimeterSpacing&quot;:0};" vertex="1" parent="1">
+                    <mxGeometry x="135" y="90" width="150" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="42" value="" style="edgeStyle=entityRelationEdgeStyle;startArrow=none;endArrow=none;segment=10;curved=1;sourcePerimeterSpacing=0;targetPerimeterSpacing=0;" edge="1" parent="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="95" y="132" as="sourcePoint"/>
+                        <mxPoint x="135" y="107" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="45" value="" style="line;strokeWidth=2;direction=south;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="68.6" y="618" width="10" height="334" as="geometry"/>
+                </mxCell>
+                <mxCell id="46" value="" style="endArrow=none;dashed=1;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="47" target="45">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="274.6" y="948" as="sourcePoint"/>
+                        <mxPoint x="419.6" y="718" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="52" value="" style="endArrow=none;dashed=1;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;exitX=0.517;exitY=0.772;exitDx=0;exitDy=0;exitPerimeter=0;strokeColor=#3399FF;" edge="1" parent="1" target="47">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="-10.399999999999999" y="956" as="sourcePoint"/>
+                        <mxPoint x="49.6" y="798" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="53" value="" style="endArrow=none;dashed=1;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;exitX=0.593;exitY=0.85;exitDx=0;exitDy=0;exitPerimeter=0;strokeColor=#3399FF;" edge="1" parent="1" target="47" source="57">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="389.6" y="955.29" as="sourcePoint"/>
+                        <mxPoint x="307.6" y="648" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="55" value="&lt;font style=&quot;color: rgb(255, 0, 0);&quot;&gt;双雷达配置&lt;/font&gt;" style="whiteSpace=wrap;html=1;rounded=1;arcSize=50;align=center;verticalAlign=middle;strokeWidth=1;autosize=1;spacing=4;treeFolding=1;treeMoving=1;newEdgeStyle={&quot;edgeStyle&quot;:&quot;entityRelationEdgeStyle&quot;,&quot;startArrow&quot;:&quot;none&quot;,&quot;endArrow&quot;:&quot;none&quot;,&quot;segment&quot;:10,&quot;curved&quot;:1,&quot;sourcePerimeterSpacing&quot;:0,&quot;targetPerimeterSpacing&quot;:0};" vertex="1" parent="1">
+                    <mxGeometry x="135" y="576" width="100" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="57" value="" style="line;strokeWidth=2;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="-300" y="946" width="1200" height="10" as="geometry"/>
+                </mxCell>
+                <mxCell id="58" value="" style="shape=ext;double=1;rounded=1;whiteSpace=wrap;html=1;arcSize=0;fillColor=#ffe6cc;strokeColor=#d79b00;rotation=45;" vertex="1" parent="1">
+                    <mxGeometry x="53.6" y="606" width="20" height="10" as="geometry"/>
+                </mxCell>
+                <mxCell id="47" value="" style="shape=ext;double=1;rounded=1;whiteSpace=wrap;html=1;arcSize=0;fillColor=#dae8fc;strokeColor=#6c8ebf;rotation=-45;" vertex="1" parent="1">
+                    <mxGeometry x="74.6" y="606" width="20" height="10" as="geometry"/>
+                </mxCell>
+                <mxCell id="64" value="" style="endArrow=none;dashed=1;html=1;exitX=0.043;exitY=0.267;exitDx=0;exitDy=0;exitPerimeter=0;fillColor=#ffe6cc;strokeColor=#FF9933;" edge="1" parent="1" source="57">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="-190.00000000000014" y="953.5699999999999" as="sourcePoint"/>
+                        <mxPoint x="63.6" y="612" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="65" value="" style="endArrow=none;dashed=1;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;exitX=0.406;exitY=0.214;exitDx=0;exitDy=0;exitPerimeter=0;fillColor=#ffe6cc;strokeColor=#FF9933;" edge="1" parent="1" target="58">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="150.7999999999998" y="950.1400000000001" as="sourcePoint"/>
+                        <mxPoint x="-45.4" y="677" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="69" value="" style="shape=curlyBracket;whiteSpace=wrap;html=1;rounded=1;labelPosition=left;verticalLabelPosition=middle;align=right;verticalAlign=middle;rotation=-90;" vertex="1" parent="1">
+                    <mxGeometry x="-100" y="810" width="20" height="320" as="geometry"/>
+                </mxCell>
+                <mxCell id="70" value="" style="shape=curlyBracket;whiteSpace=wrap;html=1;rounded=1;labelPosition=left;verticalLabelPosition=middle;align=right;verticalAlign=middle;rotation=-90;" vertex="1" parent="1">
+                    <mxGeometry x="230" y="810" width="20" height="320" as="geometry"/>
+                </mxCell>
+                <mxCell id="72" value="右探测距离" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontStyle=1" vertex="1" parent="1">
+                    <mxGeometry x="205" y="980" width="70" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="73" value="左探测距离" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontStyle=1" vertex="1" parent="1">
+                    <mxGeometry x="-120" y="990" width="70" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="74" value="" style="edgeStyle=entityRelationEdgeStyle;startArrow=none;endArrow=none;segment=10;curved=1;sourcePerimeterSpacing=0;targetPerimeterSpacing=0;" edge="1" parent="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="95.00000000000003" y="618" as="sourcePoint"/>
+                        <mxPoint x="135.00000000000003" y="593" as="targetPoint"/>
+                        <Array as="points">
+                            <mxPoint x="-295" y="1078"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>
